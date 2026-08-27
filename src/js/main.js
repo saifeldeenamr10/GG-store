@@ -2,6 +2,7 @@ import '../styles/main.css';
 import { route } from './router.js';
 import { CONFIG, migrateGames, syncGamesWithServer, UPCOMING_GAMES, toggleHype } from './data.js';
 import { t, currentLang, setLanguage, initI18n } from './i18n.js';
+import { inject } from '@vercel/analytics';
 
 export function mLink(text) { 
   if (text) {
@@ -381,6 +382,9 @@ window.addEventListener('DOMContentLoaded', () => {
   initOrderModalEvents();
   route();
   startCountdownTicker();
+  
+  // Initialize Vercel Web Analytics
+  inject();
 
   // Auto poll every 1.5 seconds for instant live updates across all devices
   setInterval(() => {
