@@ -1,0 +1,35 @@
+:root {
+  --bg: #08070d;
+  --bg-soft: #0d0c16;
+  --card: rgba(19, 18, 32, 0.85);
+  --card-solid: #131220;
+  --card-hover: rgba(26, 24, 46, 0.95);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(154, 77, 255, 0.45);
+  --purple: #9A4DFF;
+  --purple-light: #C084FC;
+  --purple-deep: #6D28D9;
+  --blue: #3E8CFF;
+  --blue-light: #38BDF8;
+  --cyan: #06B6D4;
+  --text: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-faint: #64748B;
+  --whatsapp: #25D366;
+  --messenger-a: #00B2FF;
+  --messenger-b: #B355FF;
+  --warn: #FFB020;
+  /* Pre-order tokens */
+  --preorder: #FF6B35;
+  --preorder-light: #FFAD8F;
+  --preorder-bg: rgba(255, 107, 53, .14);
+  --preorder-border: rgba(255, 107, 53, .5);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --gradient: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+  --gradient-neon: linear-gradient(135deg, #A855F7 0%, #06B6D4 100%);
+  --gradient-soft: linear-gradient(135deg, rgba(168,85,247,.15), rgba(6,182,212,.15));
+  --shadow-glow: 0 0 35px rgba(139, 92, 246, 0.3);
+  --shadow-neon: 0 10px 40px -10px rgba(6, 182, 212, 0.4);
+  --maxw: 1240px;
+}

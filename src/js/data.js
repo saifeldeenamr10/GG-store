@@ -1,0 +1,7094 @@
+export const CONFIG = {
+  storeName: 'GG Store',
+  messengerUsername: '1220265181174193',
+  messengerUrl: 'https://m.me/1220265181174193',
+  adminPassword: import.meta.env?.VITE_ADMIN_PASSWORD || 'ggstore2026',
+  defaultPolicy: [
+    { ar: 'ممنوع تغيير الباسورد أو اسم المستخدم أو الإيميل الخاص بالحساب بعد الاستلام.', en: 'Do not change the password, username, or email after receiving the account.' },
+    { ar: 'الحساب Primary يُفعَّل Primary فقط، والحساب Secondary يُفعَّل Secondary فقط.', en: 'Primary accounts must only be activated as Primary, and Secondary as Secondary.' },
+    { ar: 'الحساب مخصص للمنصة والجهاز المحددين في الطلب فقط.', en: 'The account is strictly for the console/platform specified in the order.' },
+    { ar: 'أي مخالفة لبنود الاستخدام تُحتسب تحذيراً أول، وعند التكرار يتم سحب الحساب دون استرداد.', en: 'Any violation is a warning; repeated violations result in account revocation without refund.' },
+    { ar: 'لو حصلت مخالفة غير مقصودة، تواصل معنا فوراً قبل اتخاذ أي إجراء ونساعدك في الحل.', en: 'If an unintentional violation occurs, contact us immediately for help.' }
+  ]
+};
+
+export function getAdminPassword() {
+  return localStorage.getItem('ggstore_admin_pass') || CONFIG.adminPassword || 'ggstore2026';
+}
+
+export function setAdminPassword(newPass) {
+  localStorage.setItem('ggstore_admin_pass', newPass);
+}
+
+export const GENRES = [
+  {id:'sports',    label:{ar:'رياضة',en:'Sports'},          icon:'⚽'},
+  {id:'action',    label:{ar:'أكشن ومغامرات',en:'Action'},  icon:'⚔️'},
+  {id:'openworld', label:{ar:'عالم مفتوح',en:'Open World'}, icon:'🗺️'},
+  {id:'racing',    label:{ar:'سباقات',en:'Racing'},          icon:'🏎️'},
+  {id:'fighting',  label:{ar:'قتال',en:'Fighting'},          icon:'🥊'},
+  {id:'horror',    label:{ar:'رعب وتشويق',en:'Horror'},      icon:'👻'},
+  {id:'family',    label:{ar:'عائلية',en:'Family'},          icon:'🦊'},
+  {id:'rpg',       label:{ar:'تقمص أدوار (RPG)',en:'RPG'},   icon:'🛡️'},
+  {id:'shooter',   label:{ar:'تصويب',en:'Shooter'},          icon:'🔫'}
+];
+
+export const genreMap = Object.fromEntries(GENRES.map(g => [g.id, g]));
+
+export const PSPLUS_TIERS = [
+  {id:'essential', name:'Essential', featured:false,
+   features:[
+     {ar:'اللعب أونلاين مع الأصدقاء',en:'Online Multiplayer'},
+     {ar:'تخزين سحابي لحفظ ألعابك',en:'Cloud Save Storage'},
+     {ar:'ألعاب شهرية مجانية تُضاف لمكتبتك',en:'Free Monthly Games'},
+     {ar:'خصومات حصرية على متجر PlayStation',en:'Exclusive Store Discounts'}
+   ]},
+  {id:'extra', name:'Extra', featured:true,
+   features:[
+     {ar:'كل مزايا Essential',en:'All Essential Features'},
+     {ar:'مكتبة ضخمة تضم مئات الألعاب للتحميل واللعب',en:'Huge game catalog – hundreds of downloadable titles'},
+     {ar:'تشكيلة متجددة باستمرار من كل الأنواع',en:'Constantly refreshed catalog across all genres'},
+     {ar:'ألعاب PlayStation Studios الكبرى',en:'Major PlayStation Studios titles included'}
+   ]},
+  {id:'deluxe', name:'Deluxe', featured:false,
+   features:[
+     {ar:'كل مزايا Extra',en:'All Extra Features'},
+     {ar:'مكتبة ألعاب كلاسيكية من أجيال PS1 وPS2 وPS4',en:'Classic games from PS1, PS2 & PS4 generations'},
+     {ar:'نسخ تجريبية من ألعاب جديدة قبل غيرك',en:'Game trials for new releases before launch'},
+     {ar:'بث سحابي لبعض العناوين المدعومة',en:'Cloud streaming for supported titles'}
+   ]},
+];
+
+export const PSN_GIFT_CARDS = [
+  {
+    id: "us",
+    country: { ar: "أمريكي", en: "US (United States)" },
+    region: "US",
+    flagCode: "us",
+    currency: "$",
+    currencyCode: "USD",
+    denominations: [10, 20, 50],
+    badge: "USD Account"
+  },
+  {
+    id: "uk",
+    country: { ar: "بريطاني", en: "UK (United Kingdom)" },
+    region: "UK",
+    flagCode: "gb",
+    currency: "£",
+    currencyCode: "GBP",
+    denominations: [10, 20, 50],
+    badge: "GBP Account"
+  },
+  {
+    id: "sa",
+    country: { ar: "سعودي", en: "Saudi Arabia (SA)" },
+    region: "SA",
+    flagCode: "sa",
+    currency: "$",
+    currencyCode: "USD",
+    denominations: [10, 20, 50],
+    badge: "SA Store"
+  },
+  {
+    id: "ae",
+    country: { ar: "إماراتي", en: "UAE (Emirates)" },
+    region: "UAE",
+    flagCode: "ae",
+    currency: "$",
+    currencyCode: "USD",
+    denominations: [10, 20, 50],
+    badge: "UAE Store"
+  }
+];
+
+export const SEARCH_ALIASES = {
+  'fifa': 'ea sports fc', 'fifa24': 'ea sports fc 24', 'fifa 24': 'ea sports fc 24', 'fc 24': 'ea sports fc 24', 'fc24': 'ea sports fc 24',
+  'fifa25': 'ea sports fc 25', 'fifa 25': 'ea sports fc 25', 'fc 25': 'ea sports fc 25', 'fc25': 'ea sports fc 25',
+  'fifa26': 'ea sports fc 26', 'fifa 26': 'ea sports fc 26', 'fc 26': 'ea sports fc 26', 'fc26': 'ea sports fc 26',
+  'fifa27': 'ea sports fc 27', 'fifa 27': 'ea sports fc 27', 'fc 27': 'ea sports fc 27', 'fc27': 'ea sports fc 27',
+  'gta 5': 'grand theft auto v', 'gta5': 'grand theft auto v', 'gta v': 'grand theft auto v', 'gtav': 'grand theft auto v',
+  'gta vi': 'grand theft auto vi', 'gta6': 'grand theft auto vi', 'gta 6': 'grand theft auto vi',
+  'cod': 'call of duty', 'bo6': 'black ops 6', 'black ops': 'call of duty: black ops 6', 'codbo6': 'call of duty: black ops 6',
+  'gow': 'god of war', 'god of war ragnarok': 'god of war ragnarök', 'gow ragnarok': 'god of war ragnarök',
+  'tlou': 'the last of us', 'tlou1': 'the last of us part i', 'tlou2': 'the last of us part ii', 'last of us': 'the last of us',
+  'witcher': 'the witcher 3', 'rdr': 'red dead redemption', 'rdr2': 'red dead redemption 2', 'red dead': 'red dead redemption',
+  're4': 'resident evil 4', 're village': 'resident evil village', 'resident evil 8': 'resident evil village',
+  'mk1': 'mortal kombat 1', 'mortal kombat': 'mortal kombat 1',
+  'spiderman': "marvel's spider-man", 'spider man': "marvel's spider-man", 'spider-man': "marvel's spider-man",
+  'detroit': 'detroit: become human', 'astro': 'astro bot', 'r6': 'rainbow six siege', 'siege': 'rainbow six siege',
+  'ufc': 'ufc 5', 'nba': 'nba 2k26', 'tekken': 'tekken 8', 'cyberpunk': 'cyberpunk 2077',
+  'elden': 'elden ring', 'hogwarts': 'hogwarts legacy',
+};
+
+export function normalizeQuery(q) {
+  if (!q) return '';
+  const lower = q.toLowerCase().trim();
+  return SEARCH_ALIASES[lower] || lower;
+}
+
+export const DATA_VERSION = 206;
+
+// =============================================================================
+// Upcoming Games Spotlight & Live Countdown Data
+// =============================================================================
+export const UPCOMING_GAMES = [
+  {
+    id: 'gta6',
+    name: 'Grand Theft Auto VI',
+    consoles: ['ps5'],
+    genre: 'openworld',
+    releaseDate: '2026-11-19T00:00:00Z',
+    releaseDisplay: { ar: '19 نوفمبر 2026', en: 'November 19, 2026' },
+    image: '/assets/image of the games/GTA 6.jpg',
+    hypeCount: 4890,
+    featured: true,
+    badge: { ar: '🔥 الأكثر انتظاراً عالمياً', en: '🔥 #1 Most Anticipated' },
+    desc: {
+      ar: 'الجزء السادس من ملحمة GTA — رسمياً في 19 نوفمبر 2026. أضخم عالم مفتوح في تاريخ الألعاب. احجز مكانك الآن!',
+      en: 'The next chapter in the GTA saga — launching November 19, 2026. The biggest open world in gaming history. Lock in your pre-order today!'
+    }
+  },
+  {
+    id: 'wolverine',
+    name: "Marvel's Wolverine",
+    consoles: ['ps5'],
+    genre: 'action',
+    releaseDate: '2026-09-15T00:00:00Z',
+    releaseDisplay: { ar: '15 سبتمبر 2026', en: 'September 15, 2026' },
+    image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3wvd.jpg',
+    hypeCount: 3450,
+    featured: false,
+    badge: { ar: '⚔️ حصريات Insomniac & PS5', en: '⚔️ Insomniac PS5 Exclusive' },
+    desc: {
+      ar: 'أكشن مكثف وقصة مظلمة من استوديو Insomniac Games في عالم مارفل. الإطلاق الرسمي في 15 سبتمبر 2026.',
+      en: 'Intense raw action featuring Logan in a dark original narrative by Insomniac Games. Releasing September 15, 2026.'
+    }
+  },
+  {
+    id: 'fc27',
+    name: 'EA Sports FC 27',
+    consoles: ['ps4', 'ps5'],
+    genre: 'sports',
+    releaseDate: '2026-09-25T00:00:00Z',
+    releaseDisplay: { ar: '25 سبتمبر 2026', en: 'September 25, 2026' },
+    image: '/assets/image of the games/FC 27.webp',
+    hypeCount: 3120,
+    featured: false,
+    badge: { ar: '⚽ الجيل الجديد من كرة القدم', en: '⚽ Next-Gen Football' },
+    desc: {
+      ar: 'محرك الجيل القادم وتحديثات التكنيك الكروي الثوري. الانطلاق في 25 سبتمبر 2026.',
+      en: 'Next-generation physics engine and revolutionary Ultimate Team features. Releasing September 25, 2026.'
+    }
+  },
+  {
+    id: 'ghost-yotei',
+    name: 'Ghost of Yōtei',
+    consoles: ['ps5'],
+    genre: 'openworld',
+    releaseDate: '2026-10-01T00:00:00Z',
+    releaseDisplay: { ar: '1 أكتوبر 2026', en: 'October 1, 2026' },
+    image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co8xgl.jpg',
+    hypeCount: 2840,
+    featured: false,
+    badge: { ar: '🌸 ملحمة الساموراي الجديدة', en: '🌸 Sucker Punch PS5 Exclusive' },
+    desc: {
+      ar: 'ملحمة الساموراي المرتقبة من استوديو Sucker Punch حول جبل يوتي الإصدار في 1 أكتوبر 2026.',
+      en: 'The epic new samurai journey set around Mount Yōtei by Sucker Punch. Releasing October 1, 2026.'
+    }
+  }
+];
+
+export function getHypeVotes() {
+  try {
+    return JSON.parse(localStorage.getItem('ggstore_hype_votes') || '{}');
+  } catch(e) {
+    return {};
+  }
+}
+
+export function toggleHype(id) {
+  const votes = getHypeVotes();
+  const target = UPCOMING_GAMES.find(g => g.id === id);
+  const baseCount = target ? target.hypeCount : 100;
+
+  let voted = false;
+  if (votes[id]) {
+    delete votes[id];
+    voted = false;
+  } else {
+    votes[id] = baseCount + 1;
+    voted = true;
+  }
+
+  localStorage.setItem('ggstore_hype_votes', JSON.stringify(votes));
+  const count = votes[id] || baseCount;
+  return { count, voted };
+}
+
+
+
+// =============================================================================
+// Game Catalogue — GTA 6 & FC 27 (pre-orders) pinned FIRST, then by popularity
+// Image sources:
+//   Local  → /assets/image of the games/<filename>
+//   Steam  → cdn.cloudflare.steamstatic.com/steam/apps/<AppID>/library_600x900.jpg
+//   IGDB   → images.igdb.com/igdb/image/upload/t_cover_big/<hash>.jpg
+// =============================================================================
+const INITIAL_GAMES = [
+  {
+    "id": "grand-theft-auto-vi-gta-vi",
+    "name": "Grand Theft Auto VI (GTA VI)",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "مغامرة أسطورية في لعبة GTA 6. خض أفضل التجارب والمهمات بحسابات أصلية ومضمونة 100% لملاك جهاز بلايستيشن.",
+      "en": "Experience the epic adventure of GTA 6. Featuring engaging gameplay, missions, and guaranteed official accounts for PlayStation consoles."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Grand Theft Auto VI (GTA VI).webp",
+    "preorder": true
+  },
+  {
+    "id": "grand-theft-auto-v-gta-v",
+    "name": "Grand Theft Auto V (GTA V)",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم لوس سانتوس المفتوح الشاسع. خض مغامرة السرقات الكبرى مع ثلاث شخصيات رئيسية (مايكل، فرانكلين، وتريفر) بالإضافة إلى أطوار اللعب الجماعي الأسطورية.",
+      "en": "Explore the vast, critically acclaimed open world of Los Santos. Experience the intertwining lives of Michael, Franklin, and Trevor in daring heists."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Grand Theft Auto V (GTA V).webp"
+  },
+  {
+    "id": "grand-theft-auto-the-trilogy-the-definitive-edition",
+    "name": "Grand Theft Auto: The Trilogy - The Definitive Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Grand Theft Auto: The Trilogy - The Definitive Edition. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Grand Theft Auto: The Trilogy - The Definitive Edition. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Grand Theft Auto The Trilogy - The Definitive Edition.png"
+  },
+  {
+    "id": "ea-sports-fc-27",
+    "name": "EA Sports FC 27",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "تجربة كرة القدم الأكثر واقعية عالمياً. استمتع بأحدث التشكيلات، محرك الحركة المتقدم HyperMotionV، وطور Ultimate Team مع تراخيص الدوريات الكبرى.",
+      "en": "The ultimate interactive football experience. Powered by HyperMotionV technology with fully updated squads, Ultimate Team, and authentic leagues."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/FC 27.webp",
+    "preorder": true
+  },
+  {
+    "id": "ea-sports-fc-26",
+    "name": "EA Sports FC 26",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "تجربة كرة القدم الأكثر واقعية عالمياً. استمتع بأحدث التشكيلات، محرك الحركة المتقدم HyperMotionV، وطور Ultimate Team مع تراخيص الدوريات الكبرى.",
+      "en": "The ultimate interactive football experience. Powered by HyperMotionV technology with fully updated squads, Ultimate Team, and authentic leagues."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/FC26.jpg"
+  },
+  {
+    "id": "ufc-6",
+    "name": "UFC 6",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "المحاكاة الرياضية الاحترافية الأولى. أطوار مهنية واقعية، تحكم دقيق بالحركات والنجوم، ومواجهات أونلاين حماسية.",
+      "en": "Premier professional sports simulation. Experience realistic gameplay physics, authentic roster modes, and competitive online matches."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/UFC 6.webp"
+  },
+  {
+    "id": "ufc-5",
+    "name": "UFC 5",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "المحاكاة الرياضية الاحترافية الأولى. أطوار مهنية واقعية، تحكم دقيق بالحركات والنجوم، ومواجهات أونلاين حماسية.",
+      "en": "Premier professional sports simulation. Experience realistic gameplay physics, authentic roster modes, and competitive online matches."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/UFC 5.webp"
+  },
+  {
+    "id": "nba-2k26",
+    "name": "NBA 2K26",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "المحاكاة الرياضية الاحترافية الأولى. أطوار مهنية واقعية، تحكم دقيق بالحركات والنجوم، ومواجهات أونلاين حماسية.",
+      "en": "Premier professional sports simulation. Experience realistic gameplay physics, authentic roster modes, and competitive online matches."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/NBA 2K26.webp"
+  },
+  {
+    "id": "nba-2k27",
+    "name": "NBA 2K27",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "المحاكاة الرياضية الاحترافية الأولى. أطوار مهنية واقعية، تحكم دقيق بالحركات والنجوم، ومواجهات أونلاين حماسية.",
+      "en": "Premier professional sports simulation. Experience realistic gameplay physics, authentic roster modes, and competitive online matches."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/NBA 2K27.webp"
+  },
+  {
+    "id": "call-of-duty-black-ops-7",
+    "name": "Call of Duty: Black Ops 7",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Black Ops 7.webp"
+  },
+  {
+    "id": "call-of-duty-black-ops-6",
+    "name": "Call of Duty: Black Ops 6",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/call of duty black ops 6.jpg"
+  },
+  {
+    "id": "call-of-duty-black-ops-cold-war",
+    "name": "Call of Duty: Black Ops Cold War",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Black Ops Cold War.webp"
+  },
+  {
+    "id": "call-of-duty-black-ops-iii-zombies-chronicles-edition",
+    "name": "Call of Duty: Black Ops III - Zombies Chronicles Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Black Ops III - Zombies Chronicles Edition.webp"
+  },
+  {
+    "id": "call-of-duty-black-ops-ii",
+    "name": "Call of Duty: Black Ops II",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Black Ops II.webp"
+  },
+  {
+    "id": "call-of-duty-black-ops",
+    "name": "Call of Duty: Black Ops",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Black Ops.webp"
+  },
+  {
+    "id": "call-of-duty-modern-warfare-iii",
+    "name": "Call of Duty: Modern Warfare III",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Modern Warfare III.webp"
+  },
+  {
+    "id": "call-of-duty-modern-warfare-ii",
+    "name": "Call of Duty: Modern Warfare II",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Modern Warfare II.webp"
+  },
+  {
+    "id": "call-of-duty-modern-warfare-4",
+    "name": "Call of Duty: Modern Warfare 4",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Modern Warfare 4.webp"
+  },
+  {
+    "id": "call-of-duty-modern-warfare-remastered",
+    "name": "Call of Duty: Modern Warfare Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Modern Warfare Remastered.webp"
+  },
+  {
+    "id": "call-of-duty-modern-warfare-2-campaign-remastered",
+    "name": "Call of Duty: Modern Warfare 2 - Campaign Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Modern Warfare 2 - Campaign Remastered.webp"
+  },
+  {
+    "id": "call-of-duty-modern-warfare",
+    "name": "Call of Duty: Modern Warfare",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Call of Duty Modern Warfare.webp"
+  },
+  {
+    "id": "call-of-duty-vanguard",
+    "name": "Call of Duty: Vanguard",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1985820/library_600x900.jpg"
+  },
+  {
+    "id": "call-of-duty-wwii",
+    "name": "Call of Duty: WWII",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/476600/library_600x900.jpg"
+  },
+  {
+    "id": "call-of-duty-ghosts",
+    "name": "Call of Duty: Ghosts",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "لعبة التصويب الأولى عالمياً. طور قصة حماسي، مواجهات أونلاين سينمائية سريعة، وطور الزومبي الأسطوري مع ترسانة أسلحة متطورة ورسومات مذهلة.",
+      "en": "The legendary first-person shooter series. Features an action-packed campaign, adrenaline-fueled multiplayer mode, and the iconic Zombies experience."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/209160/library_600x900.jpg"
+  },
+  {
+    "id": "marvel-spider-man-2",
+    "name": "Marvel Spider-Man 2",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "تأرجح في سماء نيويورك مع بيتر باركر ومايلز موراليس. مواجهات حماسية ضد أشهر أعداء مارفل، تنقل سلس، وقدرات خارقة مذهلة.",
+      "en": "Swing through Marvel’s New York with Peter Parker and Miles Morales. Master acrobatics, explosive venom powers, and face formidable supervillains."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Spider-Man 2.webp"
+  },
+  {
+    "id": "marvel-s-spider-man-bundle",
+    "name": "Marvel’s Spider-Man Bundle",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "تأرجح في سماء نيويورك مع بيتر باركر ومايلز موراليس. مواجهات حماسية ضد أشهر أعداء مارفل، تنقل سلس، وقدرات خارقة مذهلة.",
+      "en": "Swing through Marvel’s New York with Peter Parker and Miles Morales. Master acrobatics, explosive venom powers, and face formidable supervillains."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Marvel’s Spider-Man Bundle.webp"
+  },
+  {
+    "id": "marvel-s-spider-man-goty-remastered",
+    "name": "Marvel’s Spider-Man: GOTY & Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "تأرجح في سماء نيويورك مع بيتر باركر ومايلز موراليس. مواجهات حماسية ضد أشهر أعداء مارفل، تنقل سلس، وقدرات خارقة مذهلة.",
+      "en": "Swing through Marvel’s New York with Peter Parker and Miles Morales. Master acrobatics, explosive venom powers, and face formidable supervillains."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Marvel’s Spider-Man GOTY & Remastered.webp"
+  },
+  {
+    "id": "marvel-s-spider-man-miles-morales",
+    "name": "Marvel's Spider-Man: Miles Morales",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "تأرجح في سماء نيويورك مع بيتر باركر ومايلز موراليس. مواجهات حماسية ضد أشهر أعداء مارفل، تنقل سلس، وقدرات خارقة مذهلة.",
+      "en": "Swing through Marvel’s New York with Peter Parker and Miles Morales. Master acrobatics, explosive venom powers, and face formidable supervillains."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1817190/library_600x900.jpg"
+  },
+  {
+    "id": "marvel-s-wolverine",
+    "name": "Marvel's Wolverine",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Marvel's Wolverine. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Marvel's Wolverine. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Marvel's Wolverine.webp",
+    "preorder": true
+  },
+  {
+    "id": "god-of-war-ragnarok",
+    "name": "God of War Ragnarok",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "رحلة كراتوس وأتريوس الملحمية في مواجهة آلهة الأساطير. قتال سينمائي مذهل، أسلحة أسطورية، وقصة مؤثرة حاصدة للجوائز العالمية.",
+      "en": "Join Kratos and Atreus on an emotional and action-packed journey across the Norse realms, featuring intense combat and breathtaking cinematic visuals."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/God of War Ragnarok.webp"
+  },
+  {
+    "id": "god-of-war",
+    "name": "God of War",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "رحلة كراتوس وأتريوس الملحمية في مواجهة آلهة الأساطير. قتال سينمائي مذهل، أسلحة أسطورية، وقصة مؤثرة حاصدة للجوائز العالمية.",
+      "en": "Join Kratos and Atreus on an emotional and action-packed journey across the Norse realms, featuring intense combat and breathtaking cinematic visuals."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/God of War.webp"
+  },
+  {
+    "id": "god-of-war-iii-remastered",
+    "name": "God of War III: Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "رحلة كراتوس وأتريوس الملحمية في مواجهة آلهة الأساطير. قتال سينمائي مذهل، أسلحة أسطورية، وقصة مؤثرة حاصدة للجوائز العالمية.",
+      "en": "Join Kratos and Atreus on an emotional and action-packed journey across the Norse realms, featuring intense combat and breathtaking cinematic visuals."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/God of War III Remastered.webp"
+  },
+  {
+    "id": "god-of-war-sons-of-sparta",
+    "name": "God of War Sons of Sparta",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "رحلة كراتوس وأتريوس الملحمية في مواجهة آلهة الأساطير. قتال سينمائي مذهل، أسلحة أسطورية، وقصة مؤثرة حاصدة للجوائز العالمية.",
+      "en": "Join Kratos and Atreus on an emotional and action-packed journey across the Norse realms, featuring intense combat and breathtaking cinematic visuals."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/God of War Sons of Sparta.webp"
+  },
+  {
+    "id": "the-last-of-us-part-ii-remastered",
+    "name": "The Last of Us Part II Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "تحفة درامية وسينمائية في عالم ما بعد الكارثة. تجربة بقاء متوترة تجمع بين التخفي المحبس للأنفاس والقتال الشرس والمشاعر الإنسانية العميقة.",
+      "en": "An unforgettable post-apocalyptic masterpiece blending heart-pounding stealth, raw survival combat, and deep emotional storytelling."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/the last of us part2.jpeg"
+  },
+  {
+    "id": "the-last-of-us-part-i",
+    "name": "The Last of Us Part I",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "تحفة درامية وسينمائية في عالم ما بعد الكارثة. تجربة بقاء متوترة تجمع بين التخفي المحبس للأنفاس والقتال الشرس والمشاعر الإنسانية العميقة.",
+      "en": "An unforgettable post-apocalyptic masterpiece blending heart-pounding stealth, raw survival combat, and deep emotional storytelling."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/library_600x900.jpg"
+  },
+  {
+    "id": "the-last-of-us-remastered",
+    "name": "The Last of Us: Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "تحفة درامية وسينمائية في عالم ما بعد الكارثة. تجربة بقاء متوترة تجمع بين التخفي المحبس للأنفاس والقتال الشرس والمشاعر الإنسانية العميقة.",
+      "en": "An unforgettable post-apocalyptic masterpiece blending heart-pounding stealth, raw survival combat, and deep emotional storytelling."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Last of Us Remastered.webp"
+  },
+  {
+    "id": "red-dead-redemption-2",
+    "name": "Red Dead Redemption 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "شاهكار ألعاب العالم المفتوح في الغرب الأمريكي. قصة عصابة فان دير ليند الملحمية، عالم حي مليء بالتفاصيل، وحرية مغامرة لا تُنسى.",
+      "en": "The epic tale of outlaw Arthur Morgan and the Van der Linde gang. Immerse yourself in a vast, living frontier filled with unmatched narrative detail."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Red Dead Redemption 2.webp"
+  },
+  {
+    "id": "red-dead-redemption",
+    "name": "Red Dead Redemption",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "شاهكار ألعاب العالم المفتوح في الغرب الأمريكي. قصة عصابة فان دير ليند الملحمية، عالم حي مليء بالتفاصيل، وحرية مغامرة لا تُنسى.",
+      "en": "The epic tale of outlaw Arthur Morgan and the Van der Linde gang. Immerse yourself in a vast, living frontier filled with unmatched narrative detail."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Red Dead Redemption.webp"
+  },
+  {
+    "id": "elden-ring-nightreign",
+    "name": "Elden Ring Nightreign",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "لعبة العام من Hidetaka Miyazaki وGeorge R.R. Martin. عالم مفتوح شاسع مليء بالتحديات والأسرار، وحوش عملاقة، ومعارك حرية كاملة في بناء شخصيتك.",
+      "en": "The award-winning action RPG masterpiece by FromSoftware. Journey through the Lands Between, overcome colossal bosses, and forge your unique playstyle."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2622380/library_600x900.jpg"
+  },
+  {
+    "id": "elden-ring",
+    "name": "Elden Ring",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "لعبة العام من Hidetaka Miyazaki وGeorge R.R. Martin. عالم مفتوح شاسع مليء بالتحديات والأسرار، وحوش عملاقة، ومعارك حرية كاملة في بناء شخصيتك.",
+      "en": "The award-winning action RPG masterpiece by FromSoftware. Journey through the Lands Between, overcome colossal bosses, and forge your unique playstyle."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_600x900.jpg"
+  },
+  {
+    "id": "sekiro-shadows-die-twice-goty",
+    "name": "Sekiro: Shadows Die Twice – GOTY",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Sekiro: Shadows Die Twice – GOTY. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Sekiro: Shadows Die Twice – GOTY. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Sekiro Shadows Die Twice – GOTY.webp"
+  },
+  {
+    "id": "bloodborne-game-of-the-year-edition",
+    "name": "Bloodborne: Game of the Year Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Bloodborne: Game of the Year Edition. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Bloodborne: Game of the Year Edition. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Bloodborne Game of the Year Edition.webp"
+  },
+  {
+    "id": "bloodborne",
+    "name": "Bloodborne",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Bloodborne. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Bloodborne. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Bloodborne.webp"
+  },
+  {
+    "id": "dark-souls-iii",
+    "name": "Dark Souls III",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Dark Souls III. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Dark Souls III. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dark Souls III.webp"
+  },
+  {
+    "id": "demon-s-souls",
+    "name": "Demon's Souls",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Demon's Souls. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Demon's Souls. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Demon's Souls.webp"
+  },
+  {
+    "id": "dark-souls-ii-scholar-of-the-first-sin",
+    "name": "Dark Souls II: Scholar of the First Sin",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Dark Souls II: Scholar of the First Sin. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Dark Souls II: Scholar of the First Sin. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/335300/library_600x900.jpg"
+  },
+  {
+    "id": "dark-souls-remastered",
+    "name": "Dark Souls: Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Dark Souls: Remastered. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Dark Souls: Remastered. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/570940/library_600x900.jpg"
+  },
+  {
+    "id": "black-myth-wukong",
+    "name": "Black Myth: Wukong",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "أسطورة الملك القرد من التراث الصيني. قتال أكشن سريع ومبهر، قدرات تحول سحرية، ومعارك طاحنة ضد الوحوش والآلهة.",
+      "en": "An action RPG based on Chinese mythology. Play as the Destined One, master staff martial arts, transform, and battle formidable mythic foes."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Black Myth Wukong.webp"
+  },
+  {
+    "id": "resident-evil-4-remake",
+    "name": "Resident Evil 4 Remake",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil 4 Remake.webp"
+  },
+  {
+    "id": "resident-evil-7-biohazard",
+    "name": "Resident Evil 7: Biohazard",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil 7 Biohazard.webp"
+  },
+  {
+    "id": "resident-evil-7-gold-edition-village-gold-edition",
+    "name": "Resident Evil 7 Gold Edition & Village Gold Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil 7 Gold Edition & Village Gold Edition.webp"
+  },
+  {
+    "id": "resident-evil-2-3-raccoon-city",
+    "name": "Resident Evil 2 + 3 (Raccoon City)",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil 2 + 3 (Raccoon City).webp"
+  },
+  {
+    "id": "resident-evil-remake-trilogy",
+    "name": "Resident Evil Remake Trilogy",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil Remake Trilogy.webp"
+  },
+  {
+    "id": "resident-evil-requiem",
+    "name": "Resident Evil Requiem",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil Requiem.webp"
+  },
+  {
+    "id": "resident-evil-5",
+    "name": "Resident Evil 5",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil 5.webp"
+  },
+  {
+    "id": "resident-evil-6",
+    "name": "Resident Evil 6",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil 6.webp"
+  },
+  {
+    "id": "resident-evil-revelations-1-2-bundle",
+    "name": "Resident Evil Revelations 1 & 2 Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Resident Evil Revelations 1 & 2 Bundle.webp"
+  },
+  {
+    "id": "resident-evil-village",
+    "name": "Resident Evil Village",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "سلسلة رعب البقاء الرائدة عالمياً. أجواء مرعبة متوترة، ألغاز ذكية، ومواجهات شرسة ضد الكائنات المتحورة والوحوش.",
+      "en": "The definitive survival horror experience. Face terrifying biological threats, solve intricate environmental puzzles, and fight to survive."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1196590/library_600x900.jpg"
+  },
+  {
+    "id": "assassin-s-creed-mirage",
+    "name": "Assassin’s Creed Mirage",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Assassin’s Creed Mirage. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Assassin’s Creed Mirage. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed Mirage.jpg"
+  },
+  {
+    "id": "assassin-s-creed-black-flag-resynced",
+    "name": "Assassin's Creed Black Flag Resynced",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed Black Flag Resynced.webp"
+  },
+  {
+    "id": "assassin-s-creed-iii-remastered",
+    "name": "Assassin's Creed III Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed III Remastered.webp"
+  },
+  {
+    "id": "assassin-s-creed-iv-black-flag",
+    "name": "Assassin's Creed IV Black Flag",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed IV Black Flag.webp"
+  },
+  {
+    "id": "assassin-s-creed-origins",
+    "name": "Assassin's Creed Origins",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed Origins.webp"
+  },
+  {
+    "id": "assassin-s-creed-rogue",
+    "name": "Assassin's Creed Rogue",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed Rogue.webp"
+  },
+  {
+    "id": "assassin-s-creed-shadows",
+    "name": "Assassin's Creed Shadows",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed Shadows.webp"
+  },
+  {
+    "id": "assassin-s-creed-the-ezio-collection",
+    "name": "Assassin's Creed: The Ezio Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed The Ezio Collection.webp"
+  },
+  {
+    "id": "assassin-s-creed-valhalla",
+    "name": "Assassin's Creed Valhalla",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "استكشف حقباً تاريخية مجسدة بدقة فائقة. قفز الباركور على الأسطح، اغتيالات خفية، ومعارك تاريخية ملحمية في مختلف الحضارات.",
+      "en": "Immerse yourself in rich historical eras. Master free-flowing parkour, stealth assassinations, and epic warfare across breathtaking open worlds."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assassin's Creed Valhalla.webp"
+  },
+  {
+    "id": "assassin-s-creed-unity",
+    "name": "Assassin’s Creed Unity",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Assassin’s Creed Unity. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Assassin’s Creed Unity. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/289650/library_600x900.jpg"
+  },
+  {
+    "id": "assassin-s-creed-syndicate",
+    "name": "Assassin’s Creed Syndicate",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Assassin’s Creed Syndicate. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Assassin’s Creed Syndicate. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/368500/library_600x900.jpg"
+  },
+  {
+    "id": "assassin-s-creed-odyssey",
+    "name": "Assassin’s Creed Odyssey",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Assassin’s Creed Odyssey. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Assassin’s Creed Odyssey. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/812140/library_600x900.jpg"
+  },
+  {
+    "id": "watch-dogs-legion",
+    "name": "Watch Dogs: Legion",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Watch Dogs: Legion. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Watch Dogs: Legion. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Watch Dogs Legion.jpg"
+  },
+  {
+    "id": "watch-dogs-2",
+    "name": "Watch Dogs 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Watch Dogs 2. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Watch Dogs 2. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Watch Dogs 2.webp"
+  },
+  {
+    "id": "watch-dogs",
+    "name": "Watch Dogs",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Watch Dogs. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Watch Dogs. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Watch Dogs.webp"
+  },
+  {
+    "id": "hitman-world-of-assassination",
+    "name": "HITMAN World of Assassination",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في HITMAN World of Assassination. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in HITMAN World of Assassination. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/HITMAN World of Assassination.jpg"
+  },
+  {
+    "id": "hitman-2",
+    "name": "HITMAN 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "تتبع أهدافك حول العالم في مهام التخفي المثيرة مع العميل 47 في HITMAN 2.",
+      "en": "Track your targets across exotic globe-trotting locations in HITMAN 2."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/HITMAN 2.jpg"
+  },
+  {
+    "id": "hitman-1",
+    "name": "HITMAN (2016)",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "بداية ثلاثية التخفي الشهيرة للعميل 47 في HITMAN.",
+      "en": "Execute master contracts as Agent 47 in HITMAN."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/HITMAN 1.jpg"
+  },
+  {
+    "id": "hitman-absolution",
+    "name": "HITMAN: Absolution",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "عش قصة العميل 47 الشخصية الأكثر إثارة وتحدياً في HITMAN: Absolution.",
+      "en": "Follow Agent 47 on his most personal contract yet in HITMAN: Absolution."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/HITMAN Absolution.jpg"
+  },
+  {
+    "id": "hitman-blood-money",
+    "name": "HITMAN: Blood Money",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "واحدة من أعظم كلاسيكيات التخفي والاغتيال في تاريخ الألعاب HITMAN: Blood Money.",
+      "en": "Experience one of the greatest stealth stealth games in history HITMAN: Blood Money."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/HITMAN Blood Money.jpg"
+  },
+  {
+    "id": "uncharted-legacy-of-thieves-collection",
+    "name": "UNCHARTED: Legacy of Thieves Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع UNCHARTED: Legacy of Thieves Collection. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in UNCHARTED: Legacy of Thieves Collection. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/UNCHARTED Legacy of Thieves Collection.webp"
+  },
+  {
+    "id": "uncharted-the-nathan-drake-collection",
+    "name": "Uncharted: The Nathan Drake Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Uncharted: The Nathan Drake Collection. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Uncharted: The Nathan Drake Collection. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Uncharted The Nathan Drake Collection.webp"
+  },
+  {
+    "id": "tomb-raider-definitive-survivor-trilogy",
+    "name": "Tomb Raider: Definitive Survivor Trilogy",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tomb Raider: Definitive Survivor Trilogy. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tomb Raider: Definitive Survivor Trilogy. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Tomb Raider Definitive Survivor Trilogy.webp"
+  },
+  {
+    "id": "tomb-raider-legacy-of-atlantis",
+    "name": "Tomb Raider: Legacy of Atlantis",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tomb Raider: Legacy of Atlantis. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tomb Raider: Legacy of Atlantis. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Tomb Raider Legacy of Atlantis.webp"
+  },
+  {
+    "id": "tomb-raider-anniversary",
+    "name": "Tomb Raider: Anniversary",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tomb Raider: Anniversary. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tomb Raider: Anniversary. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/8000/library_600x900.jpg"
+  },
+  {
+    "id": "tomb-raider-i-vi-remastered",
+    "name": "Tomb Raider I-VI Remastered",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tomb Raider I-VI Remastered. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tomb Raider I-VI Remastered. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2525380/library_600x900.jpg"
+  },
+  {
+    "id": "horizon-forbidden-west",
+    "name": "Horizon Forbidden West",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "رحلة ألوي المذهلة في عالم المستقبل حيث تسيطر الآلات الحيوية العملاقة. قتال استراتيجي بالسهام، طبيعة خضراء خلابة، وأسرار حضارة مفقودة.",
+      "en": "Join Aloy as she explores majestic post-apocalyptic lands overrun by awe-inspiring mechanical beasts in a visual and tactical marvel."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Horizon Forbidden West.webp"
+  },
+  {
+    "id": "horizon-zero-dawn-complete-edition",
+    "name": "Horizon Zero Dawn: Complete Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "رحلة ألوي المذهلة في عالم المستقبل حيث تسيطر الآلات الحيوية العملاقة. قتال استراتيجي بالسهام، طبيعة خضراء خلابة، وأسرار حضارة مفقودة.",
+      "en": "Join Aloy as she explores majestic post-apocalyptic lands overrun by awe-inspiring mechanical beasts in a visual and tactical marvel."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Horizon Zero Dawn Complete Edition.png"
+  },
+  {
+    "id": "battlefield-v",
+    "name": "Battlefield V",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Battlefield V. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Battlefield V. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Battlefield V.webp"
+  },
+  {
+    "id": "battlefield-6",
+    "name": "Battlefield 6",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Battlefield 6. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Battlefield 6. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Battlefield 6.webp",
+    "preorder": false
+  },
+  {
+    "id": "battlefield-4",
+    "name": "Battlefield 4",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Battlefield 4. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Battlefield 4. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Battlefield 4.webp"
+  },
+  {
+    "id": "battlefield-2042",
+    "name": "Battlefield 2042",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Battlefield 2042. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Battlefield 2042. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Battlefield 2042.webp"
+  },
+  {
+    "id": "battlefield-1",
+    "name": "Battlefield 1",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Battlefield 1. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Battlefield 1. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Battlefield 1.webp"
+  },
+  {
+    "id": "sniper-elite-resistance",
+    "name": "Sniper Elite: Resistance",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Sniper Elite: Resistance. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Sniper Elite: Resistance. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2169200/library_600x900.jpg"
+  },
+  {
+    "id": "sniper-elite-5",
+    "name": "Sniper Elite 5",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Sniper Elite 5. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Sniper Elite 5. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Sniper Elite 5.webp"
+  },
+  {
+    "id": "sniper-elite-4",
+    "name": "Sniper Elite 4",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Sniper Elite 4. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Sniper Elite 4. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/312660/library_600x900.jpg"
+  },
+  {
+    "id": "need-for-speed-heat",
+    "name": "Need for Speed Heat",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "تجربة قيادة وتعديل السيارات الأكثر إثارة. سيارات حقيقية مرخصة، مضامير سباق واقعية، ورسومات بصرية تعكس أدق تفاصيل المحركات والسرعة.",
+      "en": "High-octane racing at its finest. Drive and customize authentic dream supercars on meticulously detailed tracks and open roads."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Need for Speed Heat.webp"
+  },
+  {
+    "id": "need-for-speed-payback",
+    "name": "Need for Speed: Payback",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "تجربة قيادة وتعديل السيارات الأكثر إثارة. سيارات حقيقية مرخصة، مضامير سباق واقعية، ورسومات بصرية تعكس أدق تفاصيل المحركات والسرعة.",
+      "en": "High-octane racing at its finest. Drive and customize authentic dream supercars on meticulously detailed tracks and open roads."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Need for Speed Payback.webp"
+  },
+  {
+    "id": "need-for-speed-unbound",
+    "name": "Need for Speed Unbound",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "تجربة قيادة وتعديل السيارات الأكثر إثارة. سيارات حقيقية مرخصة، مضامير سباق واقعية، ورسومات بصرية تعكس أدق تفاصيل المحركات والسرعة.",
+      "en": "High-octane racing at its finest. Drive and customize authentic dream supercars on meticulously detailed tracks and open roads."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1846380/library_600x900.jpg"
+  },
+  {
+    "id": "mafia-the-old-country",
+    "name": "Mafia: The Old Country",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Mafia: The Old Country. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Mafia: The Old Country. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mafia The Old Country.webp"
+  },
+  {
+    "id": "mafia-trilogy",
+    "name": "Mafia: Trilogy",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Mafia: Trilogy. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Mafia: Trilogy. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mafia Trilogy.webp"
+  },
+  {
+    "id": "tekken-8",
+    "name": "TEKKEN 8",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "أساطير ألعاب القتال التنافسية. حركات قتالية معقدة، شخصيات متنوعة بقدرات خاصة، ورسومات قتالية سينمائية تضع مهاراتك على المحك.",
+      "en": "The ultimate fighting game experience. Master intricate combos, diverse fighter rosters, and cinematic special moves in intense combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/TEKKEN 8.webp"
+  },
+  {
+    "id": "tekken-7",
+    "name": "Tekken 7",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "أساطير ألعاب القتال التنافسية. حركات قتالية معقدة، شخصيات متنوعة بقدرات خاصة، ورسومات قتالية سينمائية تضع مهاراتك على المحك.",
+      "en": "The ultimate fighting game experience. Master intricate combos, diverse fighter rosters, and cinematic special moves in intense combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Tekken 7.png"
+  },
+  {
+    "id": "mortal-kombat-11-ultimate",
+    "name": "Mortal Kombat 11: Ultimate",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "أساطير ألعاب القتال التنافسية. حركات قتالية معقدة، شخصيات متنوعة بقدرات خاصة، ورسومات قتالية سينمائية تضع مهاراتك على المحك.",
+      "en": "The ultimate fighting game experience. Master intricate combos, diverse fighter rosters, and cinematic special moves in intense combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mortal Kombat 11 Ultimate.webp"
+  },
+  {
+    "id": "mortal-kombat-xl",
+    "name": "Mortal Kombat XL",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "أساطير ألعاب القتال التنافسية. حركات قتالية معقدة، شخصيات متنوعة بقدرات خاصة، ورسومات قتالية سينمائية تضع مهاراتك على المحك.",
+      "en": "The ultimate fighting game experience. Master intricate combos, diverse fighter rosters, and cinematic special moves in intense combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mortal Kombat XL.webp"
+  },
+  {
+    "id": "mortal-kombat-1",
+    "name": "Mortal Kombat 1",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "أساطير ألعاب القتال التنافسية. حركات قتالية معقدة، شخصيات متنوعة بقدرات خاصة، ورسومات قتالية سينمائية تضع مهاراتك على المحك.",
+      "en": "The ultimate fighting game experience. Master intricate combos, diverse fighter rosters, and cinematic special moves in intense combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/library_600x900.jpg"
+  },
+  {
+    "id": "street-fighter-v-champion-edition",
+    "name": "Street Fighter V: Champion Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "أساطير ألعاب القتال التنافسية. حركات قتالية معقدة، شخصيات متنوعة بقدرات خاصة، ورسومات قتالية سينمائية تضع مهاراتك على المحك.",
+      "en": "The ultimate fighting game experience. Master intricate combos, diverse fighter rosters, and cinematic special moves in intense combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Street Fighter V Champion Edition.webp"
+  },
+  {
+    "id": "street-fighter-6",
+    "name": "Street Fighter 6",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "أساطير ألعاب القتال التنافسية. حركات قتالية معقدة، شخصيات متنوعة بقدرات خاصة، ورسومات قتالية سينمائية تضع مهاراتك على المحك.",
+      "en": "The ultimate fighting game experience. Master intricate combos, diverse fighter rosters, and cinematic special moves in intense combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1364780/library_600x900.jpg"
+  },
+  {
+    "id": "lego-star-wars-the-skywalker-saga",
+    "name": "LEGO Star Wars The Skywalker Saga",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في LEGO Star Wars The Skywalker Saga. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in LEGO Star Wars The Skywalker Saga. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/LEGO Star Wars The Skywalker Saga.webp"
+  },
+  {
+    "id": "lego-batman-legacy-of-the-dark-knight",
+    "name": "LEGO Batman: Legacy of the Dark Knight",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في LEGO Batman: Legacy of the Dark Knight. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in LEGO Batman: Legacy of the Dark Knight. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/LEGO Batman Legacy of the Dark Knight.webp"
+  },
+  {
+    "id": "lego-harry-potter-collection",
+    "name": "LEGO Harry Potter Collection",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في LEGO Harry Potter Collection. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in LEGO Harry Potter Collection. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/LEGO Harry Potter Collection.webp"
+  },
+  {
+    "id": "lego-marvel-collection",
+    "name": "LEGO Marvel Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في LEGO Marvel Collection. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in LEGO Marvel Collection. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/LEGO Marvel Collection.webp"
+  },
+  {
+    "id": "lego-the-incredibles",
+    "name": "LEGO The Incredibles",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في LEGO The Incredibles. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in LEGO The Incredibles. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/LEGO The Incredibles.webp"
+  },
+  {
+    "id": "the-lego-movie-videogame",
+    "name": "The LEGO Movie Videogame",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في The LEGO Movie Videogame. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in The LEGO Movie Videogame. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The LEGO Movie Videogame.webp"
+  },
+  {
+    "id": "the-lego-ninjago-movie-video-game",
+    "name": "The LEGO Ninjago Movie Video Game",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في The LEGO Ninjago Movie Video Game. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in The LEGO Ninjago Movie Video Game. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The LEGO Ninjago Movie Video Game.webp"
+  },
+  {
+    "id": "far-cry-3-classic-edition",
+    "name": "Far Cry 3 Classic Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Far Cry 3 Classic Edition. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Far Cry 3 Classic Edition. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Far Cry 3 Classic Edition.webp"
+  },
+  {
+    "id": "far-cry-4",
+    "name": "Far Cry 4",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Far Cry 4. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Far Cry 4. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Far Cry 4.webp"
+  },
+  {
+    "id": "far-cry-5-far-cry-new-dawn-ultimate-edition",
+    "name": "Far Cry 5 + Far Cry New Dawn Ultimate Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Far Cry 5 + Far Cry New Dawn Ultimate Edition. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Far Cry 5 + Far Cry New Dawn Ultimate Edition. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Far Cry 5 + Far Cry New Dawn Ultimate Edition.webp"
+  },
+  {
+    "id": "far-cry-new-dawn",
+    "name": "Far Cry New Dawn",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Far Cry New Dawn. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Far Cry New Dawn. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Far Cry New Dawn.webp"
+  },
+  {
+    "id": "far-cry-primal-digital-apex-edition",
+    "name": "Far Cry Primal – Digital Apex Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Far Cry Primal – Digital Apex Edition. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Far Cry Primal – Digital Apex Edition. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Far Cry Primal – Digital Apex Edition.webp"
+  },
+  {
+    "id": "far-cry-6",
+    "name": "Far Cry 6",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Far Cry 6. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Far Cry 6. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2369390/library_600x900.jpg"
+  },
+  {
+    "id": "star-wars-outlaws",
+    "name": "Star Wars Outlaws",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Star Wars Outlaws. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Star Wars Outlaws. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2842040/library_600x900.jpg"
+  },
+  {
+    "id": "star-wars-jedi-survivor",
+    "name": "Star Wars Jedi: Survivor",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Star Wars Jedi: Survivor. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Star Wars Jedi: Survivor. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1774580/library_600x900.jpg"
+  },
+  {
+    "id": "ea-star-wars-triple-bundle",
+    "name": "EA Star Wars Triple Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع EA Star Wars Triple Bundle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in EA Star Wars Triple Bundle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/EA Star Wars Triple Bundle.webp"
+  },
+  {
+    "id": "final-fantasy-xvi",
+    "name": "Final Fantasy XVI",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Final Fantasy XVI. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Final Fantasy XVI. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Final Fantasy XVI.webp"
+  },
+  {
+    "id": "final-fantasy-vii-rebirth",
+    "name": "Final Fantasy VII Rebirth",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Final Fantasy VII Rebirth. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Final Fantasy VII Rebirth. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Final Fantasy VII Rebirth.webp"
+  },
+  {
+    "id": "final-fantasy-vii-remake",
+    "name": "Final Fantasy VII Remake",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Final Fantasy VII Remake. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Final Fantasy VII Remake. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Final Fantasy VII Remake.webp"
+  },
+  {
+    "id": "final-fantasy-tactics-the-ivalice-chronicles",
+    "name": "Final Fantasy Tactics: The Ivalice Chronicles",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Final Fantasy Tactics: The Ivalice Chronicles. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Final Fantasy Tactics: The Ivalice Chronicles. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Final Fantasy Tactics The Ivalice Chronicles.webp"
+  },
+  {
+    "id": "monster-hunter-wilds",
+    "name": "Monster Hunter Wilds",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Monster Hunter Wilds. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Monster Hunter Wilds. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Monster Hunter Wilds.webp",
+    "preorder": true
+  },
+  {
+    "id": "monster-hunter-world",
+    "name": "Monster Hunter: World",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Monster Hunter: World. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Monster Hunter: World. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Monster Hunter World.webp"
+  },
+  {
+    "id": "borderlands-4",
+    "name": "Borderlands 4",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Borderlands 4. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Borderlands 4. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Borderlands 4.webp"
+  },
+  {
+    "id": "borderlands-3",
+    "name": "Borderlands 3",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Borderlands 3. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Borderlands 3. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/397540/library_600x900.jpg"
+  },
+  {
+    "id": "crash-bandicoot-crashiversary-bundle",
+    "name": "Crash Bandicoot: Crashiversary Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Crash Bandicoot: Crashiversary Bundle. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Crash Bandicoot: Crashiversary Bundle. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Crash Bandicoot Crashiversary Bundle.webp"
+  },
+  {
+    "id": "crash-spyro-triple-play-bundle",
+    "name": "Crash + Spyro Triple Play Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Crash + Spyro Triple Play Bundle. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Crash + Spyro Triple Play Bundle. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Crash + Spyro Triple Play Bundle.webp"
+  },
+  {
+    "id": "the-witcher-3-wild-hunt",
+    "name": "The Witcher 3: Wild Hunt",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في The Witcher 3: Wild Hunt. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in The Witcher 3: Wild Hunt. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Witcher 3 Wild Hunt.webp"
+  },
+  {
+    "id": "batman-arkham-collection",
+    "name": "Batman: Arkham Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Batman: Arkham Collection. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Batman: Arkham Collection. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Batman Arkham Collection.webp"
+  },
+  {
+    "id": "gotham-knights",
+    "name": "Gotham Knights",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Gotham Knights. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Gotham Knights. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Gotham Knights.webp"
+  },
+  {
+    "id": "fallout-4",
+    "name": "Fallout 4",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Fallout 4. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Fallout 4. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/377160/library_600x900.jpg"
+  },
+  {
+    "id": "cyberpunk-2077",
+    "name": "Cyberpunk 2077",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "مغامرة RPG مستقبلية في مدينة نايت سيتي المظلمة. تعديلات جسدية سايبرنيتيكية، قصة متشعبة مع كيانو ريفز، وحرية أسلوب لعب كاملة.",
+      "en": "An immersive sci-fi RPG set in Night City. Customize your cyberware, navigate dangerous mercenary contracts, and shape your story."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg"
+  },
+  {
+    "id": "metro-saga-bundle",
+    "name": "Metro Saga Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Metro Saga Bundle. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Metro Saga Bundle. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Metro Saga Bundle.webp"
+  },
+  {
+    "id": "gran-turismo-7",
+    "name": "Gran Turismo 7",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "تجربة قيادة وتعديل السيارات الأكثر إثارة. سيارات حقيقية مرخصة، مضامير سباق واقعية، ورسومات بصرية تعكس أدق تفاصيل المحركات والسرعة.",
+      "en": "High-octane racing at its finest. Drive and customize authentic dream supercars on meticulously detailed tracks and open roads."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Gran Turismo 7.jpg"
+  },
+  {
+    "id": "lies-of-p-overture-bundle",
+    "name": "Lies of P: Overture Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Lies of P: Overture Bundle. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Lies of P: Overture Bundle. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Lies of P Overture Bundle.webp"
+  },
+  {
+    "id": "forza-horizon-5",
+    "name": "Forza Horizon 5",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "تجربة قيادة وتعديل السيارات الأكثر إثارة. سيارات حقيقية مرخصة، مضامير سباق واقعية، ورسومات بصرية تعكس أدق تفاصيل المحركات والسرعة.",
+      "en": "High-octane racing at its finest. Drive and customize authentic dream supercars on meticulously detailed tracks and open roads."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/library_600x900.jpg"
+  },
+  {
+    "id": "ghost-of-yotei",
+    "name": "Ghost of Yotei",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Ghost of Yotei. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Ghost of Yotei. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ghost of Yotei.webp",
+    "preorder": true
+  },
+  {
+    "id": "astro-bot",
+    "name": "Astro Bot",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Astro Bot. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Astro Bot. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Astro Bot.jpg"
+  },
+  {
+    "id": "helldivers-2",
+    "name": "Helldivers 2",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Helldivers 2. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Helldivers 2. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Helldivers 2.webp"
+  },
+  {
+    "id": "stellar-blade",
+    "name": "Stellar Blade",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Stellar Blade. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Stellar Blade. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Stellar Blade.webp"
+  },
+  {
+    "id": "silent-hill-2",
+    "name": "Silent Hill 2",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Silent Hill 2. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Silent Hill 2. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Silent Hill 2.webp"
+  },
+  {
+    "id": "007-first-light",
+    "name": "007: First Light",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع 007: First Light. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in 007: First Light. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/007 First Light.webp",
+    "preorder": true
+  },
+  {
+    "id": "crimson-desert",
+    "name": "Crimson Desert",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Crimson Desert. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Crimson Desert. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Crimson Desert.webp",
+    "preorder": true
+  },
+  {
+    "id": "death-stranding-2-on-the-beach",
+    "name": "Death Stranding 2: On the Beach",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Death Stranding 2: On the Beach. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Death Stranding 2: On the Beach. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Death Stranding 2 On the Beach.webp",
+    "preorder": true
+  },
+  {
+    "id": "pragmata",
+    "name": "Pragmata",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Pragmata. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Pragmata. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Pragmata.webp",
+    "preorder": true
+  },
+  {
+    "id": "alan-wake",
+    "name": "Alan Wake",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Alan Wake. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Alan Wake. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Alan Wake.webp"
+  },
+  {
+    "id": "alan-wake-ii",
+    "name": "Alan Wake II",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Alan Wake II. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Alan Wake II. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Alan Wake 2.jpg"
+  },
+  {
+    "id": "alan-wake-ii-deluxe-edition",
+    "name": "Alan Wake II: Deluxe Edition",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Alan Wake II: Deluxe Edition. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Alan Wake II: Deluxe Edition. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Alan Wake II Deluxe Edition.webp"
+  },
+  {
+    "id": "ghost-of-tsushima-director-s-cut",
+    "name": "Ghost of Tsushima: Director's Cut",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "ملحمة الساموراي الخالدة في اليابان الإقطاعية. معارك كاتانا دقيقة، طبيعة ساحرة، وقصة دفاع عن الوطن بين الشرف وراهب شبح الانتقام.",
+      "en": "An incredible samurai epic set in feudal Japan. Master precision katana swordplay and stealth to liberate your homeland across stunning open landscapes."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ghost of Tsushima Director's Cut.webp"
+  },
+  {
+    "id": "hogwarts-legacy",
+    "name": "Hogwarts Legacy",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Hogwarts Legacy. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Hogwarts Legacy. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/library_600x900.jpg"
+  },
+  {
+    "id": "sonic-frontiers",
+    "name": "Sonic Frontiers",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Sonic Frontiers. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Sonic Frontiers. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1237320/library_600x900.jpg"
+  },
+  {
+    "id": "sonic-superstars",
+    "name": "Sonic Superstars",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Sonic Superstars. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Sonic Superstars. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2022670/library_600x900.jpg"
+  },
+  {
+    "id": "sonic-x-shadow-generations",
+    "name": "Sonic X Shadow Generations",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Sonic X Shadow Generations. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Sonic X Shadow Generations. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2513280/library_600x900.jpg"
+  },
+  {
+    "id": "efootball-neymar-jr-edition-2025",
+    "name": "eFootball™: Neymar Jr Edition 2025",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "استمتع بتجربة رياضية حماسية ومنافسات قوية في لعبة eFootball™: Neymar Jr Edition 2025. فرق ورخص رسمية، فيزيائية حركة واقعية، وأطوار لعب فردية وجماعية متعددة.",
+      "en": "Experience thrilling sports competition in eFootball™: Neymar Jr Edition 2025. Features authentic teams, realistic motion physics, and engaging game modes."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/eFootball™ Neymar Jr Edition 2025.png"
+  },
+  {
+    "id": "yakuza-like-a-dragon",
+    "name": "Yakuza: Like a Dragon",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Yakuza: Like a Dragon. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Yakuza: Like a Dragon. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Yakuza Like a Dragon.webp"
+  },
+  {
+    "id": "wuchang-fallen-feathers",
+    "name": "Wuchang: Fallen Feathers",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Wuchang: Fallen Feathers. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Wuchang: Fallen Feathers. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Wuchang Fallen Feathers.webp"
+  },
+  {
+    "id": "wolfenstein-alt-history-collection",
+    "name": "Wolfenstein: Alt History Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Wolfenstein: Alt History Collection. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Wolfenstein: Alt History Collection. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Wolfenstein Alt History Collection.webp"
+  },
+  {
+    "id": "wo-long-fallen-dynasty",
+    "name": "Wo Long: Fallen Dynasty",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Wo Long: Fallen Dynasty. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Wo Long: Fallen Dynasty. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1448440/library_600x900.jpg"
+  },
+  {
+    "id": "warhammer-40-000-space-marine-ii",
+    "name": "Warhammer 40,000: Space Marine II",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Warhammer 40,000: Space Marine II. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Warhammer 40,000: Space Marine II. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2183900/library_600x900.jpg"
+  },
+  {
+    "id": "wwe-2k26",
+    "name": "WWE 2K26",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "المحاكاة الرياضية الاحترافية الأولى. أطوار مهنية واقعية، تحكم دقيق بالحركات والنجوم، ومواجهات أونلاين حماسية.",
+      "en": "Premier professional sports simulation. Experience realistic gameplay physics, authentic roster modes, and competitive online matches."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/WWE 2K26.webp"
+  },
+  {
+    "id": "wild-hearts",
+    "name": "WILD HEARTS",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع WILD HEARTS. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in WILD HEARTS. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1938010/library_600x900.jpg"
+  },
+  {
+    "id": "visage",
+    "name": "Visage",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Visage. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Visage. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/594330/library_600x900.jpg"
+  },
+  {
+    "id": "vampyr",
+    "name": "Vampyr",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Vampyr. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Vampyr. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/427290/library_600x900.jpg"
+  },
+  {
+    "id": "vampire-the-masquerade-bloodlines-2",
+    "name": "Vampire: The Masquerade - Bloodlines 2",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Vampire: The Masquerade - Bloodlines 2. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Vampire: The Masquerade - Bloodlines 2. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Vampire The Masquerade - Bloodlines 2.webp"
+  },
+  {
+    "id": "until-dawn",
+    "name": "Until Dawn",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Until Dawn. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Until Dawn. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2172010/library_600x900.jpg"
+  },
+  {
+    "id": "unravel-yarny-bundle",
+    "name": "Unravel: Yarny Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Unravel: Yarny Bundle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Unravel: Yarny Bundle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Unravel Yarny Bundle.webp"
+  },
+  {
+    "id": "unravel-two",
+    "name": "Unravel Two",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Unravel Two. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Unravel Two. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Unravel Two.webp"
+  },
+  {
+    "id": "unrailed-2-back-on-track",
+    "name": "Unrailed 2: Back on Track",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Unrailed 2: Back on Track. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Unrailed 2: Back on Track. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2211170/library_600x900.jpg"
+  },
+  {
+    "id": "undisputed",
+    "name": "Undisputed",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "واجه خصومك وأظهر مهاراتك القتالية في Undisputed. مجموعة مميزة من المحاربين، ضربات كومبو قوية، ومواجهات ملحمية تعتمد على السيطرة والسرعة.",
+      "en": "Unleash devastating combos and master martial prowess in Undisputed. Features a diverse roster of fighters and intense multiplayer battles."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Undisputed.webp"
+  },
+  {
+    "id": "totally-accurate-battle-simulator-tabs",
+    "name": "Totally Accurate Battle Simulator (TABS)",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Totally Accurate Battle Simulator (TABS). قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Totally Accurate Battle Simulator (TABS). Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Totally Accurate Battle Simulator (TABS).webp"
+  },
+  {
+    "id": "topspin-2k25",
+    "name": "TopSpin 2K25",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "استمتع بتجربة رياضية حماسية ومنافسات قوية في لعبة TopSpin 2K25. فرق ورخص رسمية، فيزيائية حركة واقعية، وأطوار لعب فردية وجماعية متعددة.",
+      "en": "Experience thrilling sports competition in TopSpin 2K25. Features authentic teams, realistic motion physics, and engaging game modes."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1785650/library_600x900.jpg"
+  },
+  {
+    "id": "tom-clancy-s-the-division-2",
+    "name": "Tom Clancy’s The Division 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tom Clancy’s The Division 2. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tom Clancy’s The Division 2. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Tom Clancy's The Division.webp"
+  },
+  {
+    "id": "tom-clancy-s-rainbow-six-extraction",
+    "name": "Tom Clancy’s Rainbow Six Extraction",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Tom Clancy’s Rainbow Six Extraction. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Tom Clancy’s Rainbow Six Extraction. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2379390/library_600x900.jpg"
+  },
+  {
+    "id": "tom-clancy-s-the-division",
+    "name": "Tom Clancy's The Division",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tom Clancy's The Division. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tom Clancy's The Division. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Tom Clancy's The Division.webp"
+  },
+  {
+    "id": "tom-clancy-s-ghost-recon-wildlands",
+    "name": "Tom Clancy's Ghost Recon: Wildlands",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tom Clancy's Ghost Recon: Wildlands. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tom Clancy's Ghost Recon: Wildlands. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/460930/library_600x900.jpg"
+  },
+  {
+    "id": "tom-clancy-s-ghost-recon-breakpoint",
+    "name": "Tom Clancy's Ghost Recon Breakpoint",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Tom Clancy's Ghost Recon Breakpoint. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Tom Clancy's Ghost Recon Breakpoint. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2231380/library_600x900.jpg"
+  },
+  {
+    "id": "titanfall-2",
+    "name": "Titanfall 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Titanfall 2. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Titanfall 2. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Titanfall 2.webp"
+  },
+  {
+    "id": "thief-master-thief-edition",
+    "name": "Thief: Master Thief Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Thief: Master Thief Edition. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Thief: Master Thief Edition. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Thief Master Thief Edition.webp"
+  },
+  {
+    "id": "thehunter-call-of-the-wild",
+    "name": "TheHunter: Call of the Wild",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع TheHunter: Call of the Wild. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in TheHunter: Call of the Wild. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/518790/library_600x900.jpg"
+  },
+  {
+    "id": "the-outlast-trials",
+    "name": "The Outlast Trials",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق ف�� The Outlast Trials. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in The Outlast Trials. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Outlast Trials.webp"
+  },
+  {
+    "id": "the-outer-worlds-2",
+    "name": "The Outer Worlds 2",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Outer Worlds 2. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Outer Worlds 2. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Outer Worlds 2.webp"
+  },
+  {
+    "id": "the-outer-worlds",
+    "name": "The Outer Worlds",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Outer Worlds. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Outer Worlds. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Outer Worlds.webp"
+  },
+  {
+    "id": "the-heavy-rain-beyond-two-souls-collection",
+    "name": "The Heavy Rain & BEYOND: Two Souls Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Heavy Rain & BEYOND: Two Souls Collection. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Heavy Rain & BEYOND: Two Souls Collection. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Heavy Rain & BEYOND Two Souls Collection.webp"
+  },
+  {
+    "id": "the-forest",
+    "name": "The Forest",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Forest. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Forest. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Forest.webp"
+  },
+  {
+    "id": "the-evil-within-2",
+    "name": "The Evil Within 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في The Evil Within 2. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in The Evil Within 2. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/601430/library_600x900.jpg"
+  },
+  {
+    "id": "the-evil-within",
+    "name": "The Evil Within",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في The Evil Within. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in The Evil Within. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/268050/library_600x900.jpg"
+  },
+  {
+    "id": "the-elder-scrolls-v-skyrim",
+    "name": "The Elder Scrolls V: Skyrim",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في The Elder Scrolls V: Skyrim. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in The Elder Scrolls V: Skyrim. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Elder Scrolls V Skyrim.webp"
+  },
+  {
+    "id": "the-elder-scrolls-iv-oblivion-remastered",
+    "name": "The Elder Scrolls IV: Oblivion Remastered",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Elder Scrolls IV: Oblivion Remastered. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Elder Scrolls IV: Oblivion Remastered. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/The Elder Scrolls IV Oblivion Remastered.webp"
+  },
+  {
+    "id": "the-dark-pictures-anthology-the-devil-in-me",
+    "name": "The Dark Pictures Anthology: The Devil in Me",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Dark Pictures Anthology: The Devil in Me. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Dark Pictures Anthology: The Devil in Me. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1567020/library_600x900.jpg"
+  },
+  {
+    "id": "the-dark-pictures-anthology-man-of-medan",
+    "name": "The Dark Pictures Anthology: Man of Medan",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Dark Pictures Anthology: Man of Medan. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Dark Pictures Anthology: Man of Medan. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/939850/library_600x900.jpg"
+  },
+  {
+    "id": "the-dark-pictures-anthology-house-of-ashes",
+    "name": "The Dark Pictures Anthology: House of Ashes",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع The Dark Pictures Anthology: House of Ashes. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in The Dark Pictures Anthology: House of Ashes. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1281590/library_600x900.jpg"
+  },
+  {
+    "id": "the-crew-motorfest",
+    "name": "The Crew Motorfest",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "تجربة قيادة وتعديل السيارات الأكثر إثارة. سيارات حقيقية مرخصة، مضامير سباق واقعية، ورسومات بصرية تعكس أدق تفاصيل المحركات والسرعة.",
+      "en": "High-octane racing at its finest. Drive and customize authentic dream supercars on meticulously detailed tracks and open roads."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2698940/library_600x900.jpg"
+  },
+  {
+    "id": "taxi-life-a-city-driving-simulator",
+    "name": "Taxi Life: A City Driving Simulator",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Taxi Life: A City Driving Simulator. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Taxi Life: A City Driving Simulator. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1351240/library_600x900.jpg"
+  },
+  {
+    "id": "stray",
+    "name": "Stray",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Stray. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Stray. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Stray.webp"
+  },
+  {
+    "id": "starfield",
+    "name": "Starfield",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Starfield. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Starfield. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Starfield.webp"
+  },
+  {
+    "id": "stardew-valley",
+    "name": "Stardew Valley",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Stardew Valley. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Stardew Valley. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Stardew Valley.webp"
+  },
+  {
+    "id": "split-fiction",
+    "name": "Split Fiction",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Split Fiction. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Split Fiction. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Split Fiction.webp"
+  },
+  {
+    "id": "south-of-midnight-weaver-s-edition",
+    "name": "South of Midnight: Weaver's Edition",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع South of Midnight: Weaver's Edition. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in South of Midnight: Weaver's Edition. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/South of Midnight Weaver's Edition.webp"
+  },
+  {
+    "id": "snowrunner",
+    "name": "SnowRunner",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع SnowRunner. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in SnowRunner. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/SnowRunner.webp"
+  },
+  {
+    "id": "slime-rancher",
+    "name": "Slime Rancher",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Slime Rancher. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Slime Rancher. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Slime Rancher.webp"
+  },
+  {
+    "id": "silent-hill-townfall",
+    "name": "Silent Hill: Townfall",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Silent Hill: Townfall. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Silent Hill: Townfall. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Silent Hill Townfall.webp"
+  },
+  {
+    "id": "silent-hill-f",
+    "name": "Silent Hill f",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Silent Hill f. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Silent Hill f. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Silent Hill f.webp"
+  },
+  {
+    "id": "sifu",
+    "name": "Sifu",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Sifu. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Sifu. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Sifu.webp"
+  },
+  {
+    "id": "sid-meier-s-civilization-vii",
+    "name": "Sid Meier's Civilization VII",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Sid Meier's Civilization VII. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Sid Meier's Civilization VII. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Sid Meier's Civilization VII.webp"
+  },
+  {
+    "id": "shinobi-art-of-vengeance",
+    "name": "Shinobi: Art of Vengeance",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Shinobi: Art of Vengeance. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Shinobi: Art of Vengeance. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Shinobi Art of Vengeance.webp"
+  },
+  {
+    "id": "sherlock-holmes-the-devil-s-daughter",
+    "name": "Sherlock Holmes: The Devil's Daughter",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Sherlock Holmes: The Devil's Daughter. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Sherlock Holmes: The Devil's Daughter. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Sherlock Holmes The Devil's Daughter.webp"
+  },
+  {
+    "id": "senua-s-saga-hellblade-ii",
+    "name": "Senua's Saga: Hellblade II",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Senua's Saga: Hellblade II. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Senua's Saga: Hellblade II. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Senua's Saga Hellblade II.webp"
+  },
+  {
+    "id": "sea-of-thieves",
+    "name": "Sea of Thieves",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Sea of Thieves. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Sea of Thieves. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Sea of Thieves.webp"
+  },
+  {
+    "id": "satisfactory",
+    "name": "Satisfactory",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Satisfactory. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Satisfactory. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Satisfactory.webp"
+  },
+  {
+    "id": "samurai-warriors-5",
+    "name": "Samurai Warriors 5",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Samurai Warriors 5. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Samurai Warriors 5. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Samurai Warriors 5.webp"
+  },
+  {
+    "id": "saints-row",
+    "name": "Saints Row",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Saints Row. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Saints Row. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Saints Row.webp"
+  },
+  {
+    "id": "sackboy-a-big-adventure",
+    "name": "Sackboy: A Big Adventure",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Sackboy: A Big Adventure. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Sackboy: A Big Adventure. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Sackboy A Big Adventure.webp"
+  },
+  {
+    "id": "saros",
+    "name": "SAROS",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع SAROS. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in SAROS. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/SAROS.webp"
+  },
+  {
+    "id": "s-t-a-l-k-e-r-2-heart-of-chornobyl",
+    "name": "S.T.A.L.K.E.R. 2: Heart of Chornobyl",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع S.T.A.L.K.E.R. 2: Heart of Chornobyl. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in S.T.A.L.K.E.R. 2: Heart of Chornobyl. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/S.T.A.L.K.E.R. 2 Heart of Chornobyl.webp"
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Rust. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Rust. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Rust.webp"
+  },
+  {
+    "id": "rise-of-the-ronin",
+    "name": "Rise of the Ronin",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Rise of the Ronin. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Rise of the Ronin. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Rise of the Ronin.webp"
+  },
+  {
+    "id": "riders-republic",
+    "name": "Riders Republic",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "عش متعة السرعة والتحدي في Riders Republic. تشكيلة واسعة من السيارات والمضامير، خيارات تعديل متقدمة، وأجواء سباق تحبس الأنفاس.",
+      "en": "Feel the rush of adrenaline and speed in Riders Republic. Featuring top-tier vehicles, customizable options, and intense racing tracks."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Riders Republic.webp"
+  },
+  {
+    "id": "ride-5",
+    "name": "Ride 5",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "عش متعة السرعة والتحدي في Ride 5. تشكيلة واسعة من السيارات والمضامير، خيارات تعديل متقدمة، وأجواء سباق تحبس الأنفاس.",
+      "en": "Feel the rush of adrenaline and speed in Ride 5. Featuring top-tier vehicles, customizable options, and intense racing tracks."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ride 5.webp"
+  },
+  {
+    "id": "returnal",
+    "name": "Returnal",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Returnal. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Returnal. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Returnal.webp"
+  },
+  {
+    "id": "remnant-ii",
+    "name": "Remnant II",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Remnant II. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Remnant II. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Remnant II.webp"
+  },
+  {
+    "id": "rematch",
+    "name": "Rematch",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Rematch. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Rematch. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Rematch.webp"
+  },
+  {
+    "id": "reanimal",
+    "name": "Reanimal",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Reanimal. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Reanimal. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Reanimal.webp"
+  },
+  {
+    "id": "ready-or-not",
+    "name": "Ready or Not",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Ready or Not. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Ready or Not. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ready or Not.webp"
+  },
+  {
+    "id": "rayman-legends",
+    "name": "Rayman Legends",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Rayman Legends. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Rayman Legends. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Rayman Legends.webp"
+  },
+  {
+    "id": "ratchet-clank-rift-apart",
+    "name": "Ratchet & Clank: Rift Apart",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Ratchet & Clank: Rift Apart. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Ratchet & Clank: Rift Apart. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ratchet & Clank Rift Apart.webp"
+  },
+  {
+    "id": "raft",
+    "name": "Raft",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Raft. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Raft. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Raft.png"
+  },
+  {
+    "id": "prince-of-persia-the-lost-crown",
+    "name": "Prince of Persia: The Lost Crown",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Prince of Persia: The Lost Crown. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Prince of Persia: The Lost Crown. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Prince of Persia The Lost Crown.webp"
+  },
+  {
+    "id": "police-simulator-patrol-officers",
+    "name": "Police Simulator: Patrol Officers",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Police Simulator: Patrol Officers. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Police Simulator: Patrol Officers. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Police Simulator Patrol Officers.webp"
+  },
+  {
+    "id": "plants-vs-zombies-battle-for-neighborville",
+    "name": "Plants vs. Zombies: Battle for Neighborville",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Plants vs. Zombies: Battle for Neighborville. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Plants vs. Zombies: Battle for Neighborville. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Plants vs. Zombies Battle for Neighborville.webp"
+  },
+  {
+    "id": "plants-vs-zombies-replanted",
+    "name": "Plants vs. Zombies Replanted",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Plants vs. Zombies Replanted. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Plants vs. Zombies Replanted. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Plants vs. Zombies Replanted.webp"
+  },
+  {
+    "id": "phasmophobia",
+    "name": "Phasmophobia",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Phasmophobia. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Phasmophobia. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Phasmophobia.webp"
+  },
+  {
+    "id": "payday-3",
+    "name": "Payday 3",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Payday 3. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Payday 3. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Payday 3.webp"
+  },
+  {
+    "id": "party-animals",
+    "name": "Party Animals",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Party Animals. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Party Animals. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Party Animals.webp"
+  },
+  {
+    "id": "palworld",
+    "name": "Palworld",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Palworld. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Palworld. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Palworld.webp"
+  },
+  {
+    "id": "pacify",
+    "name": "Pacify",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Pacify. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Pacify. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Pacify.webp"
+  },
+  {
+    "id": "overcooked-all-you-can-eat",
+    "name": "Overcooked! All You Can Eat",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في Overcooked! All You Can Eat. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in Overcooked! All You Can Eat. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Overcooked! All You Can Eat.webp"
+  },
+  {
+    "id": "outer-wilds",
+    "name": "Outer Wilds",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Outer Wilds. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Outer Wilds. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Outer Wilds.webp"
+  },
+  {
+    "id": "no-man-s-sky",
+    "name": "No Man's Sky",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع No Man's Sky. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in No Man's Sky. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/No Man's Sky.webp"
+  },
+  {
+    "id": "nioh-3",
+    "name": "Nioh 3",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Nioh 3. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Nioh 3. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Nioh 3.webp"
+  },
+  {
+    "id": "nier-automata-game-of-the-yorha-edition",
+    "name": "NieR: Automata Game of the YoRHa Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع NieR: Automata Game of the YoRHa Edition. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in NieR: Automata Game of the YoRHa Edition. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/NieR Automata Game of the YoRHa Edition.webp"
+  },
+  {
+    "id": "nickelodeon-all-star-brawl-2",
+    "name": "Nickelodeon All-Star Brawl 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Nickelodeon All-Star Brawl 2. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Nickelodeon All-Star Brawl 2. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Nickelodeon All-Star Brawl 2.webp"
+  },
+  {
+    "id": "moving-out-moving-out-2-bundle",
+    "name": "Moving Out + Moving Out 2 Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Moving Out + Moving Out 2 Bundle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Moving Out + Moving Out 2 Bundle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Moving Out + Moving Out 2 Bundle.webp"
+  },
+  {
+    "id": "mouse-p-i-for-hire",
+    "name": "Mouse: P.I. For Hire",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Mouse: P.I. For Hire. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Mouse: P.I. For Hire. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mouse P.I. For Hire.webp"
+  },
+  {
+    "id": "mount-blade-ii-bannerlord",
+    "name": "Mount & Blade II: Bannerlord",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Mount & Blade II: Bannerlord. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Mount & Blade II: Bannerlord. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mount & Blade II Bannerlord.webp"
+  },
+  {
+    "id": "mistfall-hunter",
+    "name": "Mistfall Hunter",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Mistfall Hunter. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Mistfall Hunter. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mistfall Hunter.webp"
+  },
+  {
+    "id": "minecraft",
+    "name": "Minecraft",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Minecraft. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Minecraft. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Minecraft.webp"
+  },
+  {
+    "id": "mindseye",
+    "name": "MindsEye",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع MindsEye. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in MindsEye. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/MindsEye.png"
+  },
+  {
+    "id": "middle-earth-the-shadow-bundle",
+    "name": "Middle-earth: The Shadow Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Middle-earth: The Shadow Bundle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Middle-earth: The Shadow Bundle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Middle-earth The Shadow Bundle.webp"
+  },
+  {
+    "id": "microsoft-flight-simulator-2024",
+    "name": "Microsoft Flight Simulator 2024",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Microsoft Flight Simulator 2024. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Microsoft Flight Simulator 2024. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Microsoft Flight Simulator 2024.webp"
+  },
+  {
+    "id": "metal-gear-solid-master-collection-vol-1",
+    "name": "Metal Gear Solid: Master Collection Vol. 1",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Metal Gear Solid: Master Collection Vol. 1. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Metal Gear Solid: Master Collection Vol. 1. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Metal Gear Solid Master Collection Vol. 1.webp"
+  },
+  {
+    "id": "metal-gear-solid-snake-eater",
+    "name": "Metal Gear Solid Δ: Snake Eater",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Metal Gear Solid Δ: Snake Eater. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Metal Gear Solid Δ: Snake Eater. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Metal Gear Solid Δ Snake Eater.webp"
+  },
+  {
+    "id": "medieval-dynasty",
+    "name": "Medieval Dynasty",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Medieval Dynasty. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Medieval Dynasty. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Medieval Dynasty.webp"
+  },
+  {
+    "id": "max-payne",
+    "name": "Max Payne",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Max Payne. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Max Payne. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Max Payne.webp"
+  },
+  {
+    "id": "marvel-s-midnight-suns",
+    "name": "Marvel's Midnight Suns",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Marvel's Midnight Suns. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Marvel's Midnight Suns. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Marvel's Midnight Suns.webp"
+  },
+  {
+    "id": "marvel-s-guardians-of-the-galaxy",
+    "name": "Marvel's Guardians of the Galaxy",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Marvel's Guardians of the Galaxy. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Marvel's Guardians of the Galaxy. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Marvel's Guardians of the Galaxy.webp"
+  },
+  {
+    "id": "marvel-tokon-fighting-souls",
+    "name": "Marvel Tokon: Fighting Souls",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Marvel Tokon: Fighting Souls. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Marvel Tokon: Fighting Souls. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Marvel Tokon Fighting Souls.webp"
+  },
+  {
+    "id": "marathon",
+    "name": "Marathon",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Marathon. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Marathon. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Marathon.webp"
+  },
+  {
+    "id": "maid-of-sker",
+    "name": "Maid of Sker",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Maid of Sker. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Maid of Sker. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Maid of Sker.jpg"
+  },
+  {
+    "id": "madison",
+    "name": "Madison",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Madison. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Madison. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Madison.webp"
+  },
+  {
+    "id": "madden-nfl-26",
+    "name": "Madden NFL 26",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Madden NFL 26. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Madden NFL 26. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Madden NFL 26.webp"
+  },
+  {
+    "id": "mad-max",
+    "name": "Mad Max",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Mad Max. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Mad Max. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Mad Max.webp"
+  },
+  {
+    "id": "lords-of-the-fallen",
+    "name": "Lords of the Fallen",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Lords of the Fallen. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Lords of the Fallen. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Lords of the Fallen.webp"
+  },
+  {
+    "id": "little-nightmares-iii",
+    "name": "Little Nightmares III",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Little Nightmares III. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Little Nightmares III. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Little Nightmares III.webp"
+  },
+  {
+    "id": "little-nightmares-ii",
+    "name": "Little Nightmares II",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Little Nightmares II. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Little Nightmares II. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Little Nightmares II.webp"
+  },
+  {
+    "id": "little-nightmares-i-ii-bundle",
+    "name": "Little Nightmares I & II Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Little Nightmares I & II Bundle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Little Nightmares I & II Bundle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Little Nightmares I & II Bundle.webp"
+  },
+  {
+    "id": "little-nightmares",
+    "name": "Little Nightmares",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Little Nightmares. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Little Nightmares. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Little Nightmares.webp"
+  },
+  {
+    "id": "lies-of-p",
+    "name": "Lies of P",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "rpg",
+    "desc": {
+      "ar": "مغامرة تقمص أدوار عميقة في Lies of P. خيارات شخصية واسعة، تطوير المهارات والترسانة، وقصة عالم ملحمي يتأثر بقدراتك وقراراتك.",
+      "en": "Embrace a deep role-playing adventure in Lies of P. Customize your hero, upgrade skills, and shape an expansive narrative world."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Lies of P.webp"
+  },
+  {
+    "id": "liar-s-bar",
+    "name": "Liar’s Bar",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Liar’s Bar. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Liar’s Bar. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Liar’s Bar.webp"
+  },
+  {
+    "id": "l-a-noire",
+    "name": "L.A. Noire",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع L.A. Noire. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in L.A. Noire. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/L.A. Noire.webp"
+  },
+  {
+    "id": "kingdom-come-deliverance-ii",
+    "name": "Kingdom Come: Deliverance II",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Kingdom Come: Deliverance II. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Kingdom Come: Deliverance II. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Kingdom Come Deliverance II.webp"
+  },
+  {
+    "id": "kingdom-come-deliverance",
+    "name": "Kingdom Come: Deliverance",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Kingdom Come: Deliverance. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Kingdom Come: Deliverance. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Kingdom Come Deliverance.jpg"
+  },
+  {
+    "id": "killing-floor-iii",
+    "name": "Killing Floor III",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Killing Floor III. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Killing Floor III. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Killing Floor III.webp"
+  },
+  {
+    "id": "kena-bridge-of-spirits",
+    "name": "Kena: Bridge of Spirits",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Kena: Bridge of Spirits. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Kena: Bridge of Spirits. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Kena Bridge of Spirits.webp"
+  },
+  {
+    "id": "kao-the-kangaroo",
+    "name": "Kao the Kangaroo",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Kao the Kangaroo. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Kao the Kangaroo. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Kao the Kangaroo.webp"
+  },
+  {
+    "id": "just-cause-3",
+    "name": "Just Cause 3",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "openworld",
+    "desc": {
+      "ar": "عالم مفتوح شاسع ينتظرك في Just Cause 3. استكشاف حر، مهمات رئيسية وجانبية غنية، وتجربة مغامرة تمنحك الحرية الكاملة في اختيار طريقك.",
+      "en": "Explore a vast and immersive open world in Just Cause 3. Complete epic quests, discover hidden secrets, and forge your unique adventure."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Just Cause 3.webp"
+  },
+  {
+    "id": "it-takes-two",
+    "name": "It Takes Two",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "family",
+    "desc": {
+      "ar": "لعبة عائلية ممتعة ومناسبة لجميع الأعمار في It Takes Two. مغامرات مرحة، رسومات مبهجة، وأطوار لعب تعاونية تجلب البسمة والأوقات السعيدة.",
+      "en": "Delightful family-friendly entertainment in It Takes Two. Enjoy charming visuals, fun mechanics, and memorable cooperative gameplay."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/It Takes Two.webp"
+  },
+  {
+    "id": "inside-limbo-bundle",
+    "name": "Inside & Limbo Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Inside & Limbo Bundle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Inside & Limbo Bundle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Inside & Limbo Bundle.webp"
+  },
+  {
+    "id": "injustice-2",
+    "name": "Injustice 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "fighting",
+    "desc": {
+      "ar": "واجه خصومك وأظهر مهاراتك القتالية في Injustice 2. مجموعة مميزة من المحاربين، ضربات كومبو قوية، ومواجهات ملحمية تعتمد على السيطرة والسرعة.",
+      "en": "Unleash devastating combos and master martial prowess in Injustice 2. Features a diverse roster of fighters and intense multiplayer battles."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Injustice 2.webp"
+  },
+  {
+    "id": "infamous-second-son",
+    "name": "Infamous: Second Son",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Infamous: Second Son. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Infamous: Second Son. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Infamous Second Son.webp"
+  },
+  {
+    "id": "indiana-jones-and-the-great-circle",
+    "name": "Indiana Jones and the Great Circle",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Indiana Jones and the Great Circle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Indiana Jones and the Great Circle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Indiana Jones and the Great Circle.webp"
+  },
+  {
+    "id": "hunt-showdown",
+    "name": "Hunt: Showdown",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Hunt: Showdown. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Hunt: Showdown. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Hunt Showdown.webp"
+  },
+  {
+    "id": "house-flipper",
+    "name": "House Flipper",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع House Flipper. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in House Flipper. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/House Flipper.webp"
+  },
+  {
+    "id": "high-on-life",
+    "name": "High on Life",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع High on Life. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in High on Life. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/High on Life.webp"
+  },
+  {
+    "id": "hell-is-us",
+    "name": "Hell is Us",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Hell is Us. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Hell is Us. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1620730/library_600x900.jpg"
+  },
+  {
+    "id": "hazelight-bundle",
+    "name": "Hazelight Bundle",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Hazelight Bundle. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Hazelight Bundle. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Hazelight Bundle.webp"
+  },
+  {
+    "id": "halo-campaign-evolved",
+    "name": "Halo: Campaign Evolved",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Halo: Campaign Evolved. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Halo: Campaign Evolved. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Halo Campaign Evolved.webp"
+  },
+  {
+    "id": "grounded",
+    "name": "Grounded",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Grounded. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Grounded. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Grounded.webp"
+  },
+  {
+    "id": "grid-legends",
+    "name": "Grid Legends",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "عش متعة السرعة والتحدي في Grid Legends. تشكيلة واسعة من السيارات والمضامير، خيارات تعديل متقدمة، وأجواء سباق تحبس الأنفاس.",
+      "en": "Feel the rush of adrenaline and speed in Grid Legends. Featuring top-tier vehicles, customizable options, and intense racing tracks."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Grid Legends.webp"
+  },
+  {
+    "id": "green-hell",
+    "name": "Green Hell",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Green Hell. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Green Hell. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Green Hell.webp"
+  },
+  {
+    "id": "goat-simulator",
+    "name": "Goat Simulator",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Goat Simulator. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Goat Simulator. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Goat Simulator.webp"
+  },
+  {
+    "id": "ghostwire-tokyo",
+    "name": "Ghostwire: Tokyo",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Ghostwire: Tokyo. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Ghostwire: Tokyo. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ghostwire Tokyo.webp"
+  },
+  {
+    "id": "five-nights-at-freddy-s-secret-of-the-mimic",
+    "name": "Five Nights at Freddy's: Secret of the Mimic",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Five Nights at Freddy's: Secret of the Mimic. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Five Nights at Freddy's: Secret of the Mimic. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Five Nights at Freddy's Secret of the Mimic.webp"
+  },
+  {
+    "id": "firewatch",
+    "name": "Firewatch",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Firewatch. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Firewatch. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Firewatch.webp"
+  },
+  {
+    "id": "farming-simulator-22",
+    "name": "Farming Simulator 22",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Farming Simulator 22. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Farming Simulator 22. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Farming Simulator 22.webp"
+  },
+  {
+    "id": "f1-25",
+    "name": "F1 25",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "استمتع بتجربة رياضية حماسية ومنافسات قوية في لعبة F1 25. فرق ورخص رسمية، فيزيائية حركة واقعية، وأطوار لعب فردية وجماعية متعددة.",
+      "en": "Experience thrilling sports competition in F1 25. Features authentic teams, realistic motion physics, and engaging game modes."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/F1 25.webp"
+  },
+  {
+    "id": "escape-the-backrooms",
+    "name": "Escape the Backrooms",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Escape the Backrooms. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Escape the Backrooms. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Escape the Backrooms.webp"
+  },
+  {
+    "id": "epic-mickey-rebrushed",
+    "name": "Epic Mickey: Rebrushed",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Epic Mickey: Rebrushed. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Epic Mickey: Rebrushed. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Epic Mickey Rebrushed.webp"
+  },
+  {
+    "id": "dying-light-the-beast",
+    "name": "Dying Light: The Beast",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Dying Light: The Beast. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Dying Light: The Beast. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dying Light The Beast.webp"
+  },
+  {
+    "id": "dying-light-2-stay-human",
+    "name": "Dying Light 2 Stay Human",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Dying Light 2 Stay Human. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Dying Light 2 Stay Human. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dying Light 2 Stay Human.jpg"
+  },
+  {
+    "id": "dying-light",
+    "name": "Dying Light",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Dying Light. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Dying Light. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dying Light.webp"
+  },
+  {
+    "id": "dune-awakening",
+    "name": "Dune Awakening",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Dune Awakening. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Dune Awakening. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dune Awakening.webp"
+  },
+  {
+    "id": "dragon-s-dogma-ii",
+    "name": "Dragon's Dogma II",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Dragon's Dogma II. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Dragon's Dogma II. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dragon's Dogma II.webp"
+  },
+  {
+    "id": "doom-the-dark-ages",
+    "name": "Doom: The Dark Ages",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Doom: The Dark Ages. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Doom: The Dark Ages. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Doom The Dark Ages.webp"
+  },
+  {
+    "id": "doom",
+    "name": "Doom",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Doom. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Doom. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Doom.webp"
+  },
+  {
+    "id": "dispatch",
+    "name": "Dispatch",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Dispatch. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Dispatch. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dispatch.webp"
+  },
+  {
+    "id": "disney-dreamlight-valley",
+    "name": "Disney Dreamlight Valley",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Disney Dreamlight Valley. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Disney Dreamlight Valley. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Disney Dreamlight Valley.webp"
+  },
+  {
+    "id": "disco-elysium-the-final-cut",
+    "name": "Disco Elysium - The Final Cut",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Disco Elysium - The Final Cut. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Disco Elysium - The Final Cut. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Disco Elysium - The Final Cut.webp"
+  },
+  {
+    "id": "dirt-5",
+    "name": "Dirt 5",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "عش متعة السرعة والتحدي في Dirt 5. تشكيلة واسعة من السيارات والمضامير، خيارات تعديل متقدمة، وأجواء سباق تحبس الأنفاس.",
+      "en": "Feel the rush of adrenaline and speed in Dirt 5. Featuring top-tier vehicles, customizable options, and intense racing tracks."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dirt 5.webp"
+  },
+  {
+    "id": "directive-8020",
+    "name": "Directive 8020",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Directive 8020. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Directive 8020. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Directive 8020.webp"
+  },
+  {
+    "id": "digimon-story-time-stranger",
+    "name": "Digimon Story: Time Stranger",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Digimon Story: Time Stranger. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Digimon Story: Time Stranger. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Digimon Story Time Stranger.webp"
+  },
+  {
+    "id": "detroit-become-human",
+    "name": "Detroit: Become Human",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Detroit: Become Human. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Detroit: Become Human. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Detroit Become Human.png"
+  },
+  {
+    "id": "degrees-of-separation",
+    "name": "Degrees of Separation",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Degrees of Separation. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Degrees of Separation. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Degrees of Separation.webp"
+  },
+  {
+    "id": "deathloop",
+    "name": "Deathloop",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Deathloop. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Deathloop. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Deathloop.webp"
+  },
+  {
+    "id": "death-stranding-digital-deluxe-edition",
+    "name": "Death Stranding: Digital Deluxe Edition",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Death Stranding: Digital Deluxe Edition. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Death Stranding: Digital Deluxe Edition. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Death Stranding Digital Deluxe Edition.webp"
+  },
+  {
+    "id": "dead-space",
+    "name": "Dead Space",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "horror",
+    "desc": {
+      "ar": "عش أجواء الرعب والتشويق في Dead Space. قصة مظلمة، ألغاز متوترة، ومواجهات تصحبها إثارة مستمرة تجعلك على أعصابك طوال اللعب.",
+      "en": "Survive a chilling, nerve-wracking horror experience in Dead Space. Filled with terrifying encounters, intricate puzzles, and atmospheric suspense."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Dead Space.webp"
+  },
+  {
+    "id": "days-gone-remastered",
+    "name": "Days Gone Remastered",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Days Gone Remastered. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Days Gone Remastered. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Days Gone Remastered.webp"
+  },
+  {
+    "id": "dayz",
+    "name": "DayZ",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع DayZ. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in DayZ. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/DayZ.webp"
+  },
+  {
+    "id": "darwin-s-paradox",
+    "name": "Darwin's Paradox!",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Darwin's Paradox!. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Darwin's Paradox!. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Darwin's Paradox!.webp"
+  },
+  {
+    "id": "darksiders-iii",
+    "name": "Darksiders III",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Darksiders III. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Darksiders III. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Darksiders III.webp"
+  },
+  {
+    "id": "doom-eternal",
+    "name": "DOOM Eternal",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في DOOM Eternal. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in DOOM Eternal. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/DOOM Eternal.webp"
+  },
+  {
+    "id": "cuphead-the-delicious-last-course",
+    "name": "Cuphead & The Delicious Last Course",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Cuphead & The Delicious Last Course. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Cuphead & The Delicious Last Course. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Cuphead & The Delicious Last Course.webp"
+  },
+  {
+    "id": "crysis-remastered-trilogy",
+    "name": "Crysis Remastered Trilogy",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Crysis Remastered Trilogy. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Crysis Remastered Trilogy. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Crysis Remastered Trilogy.webp"
+  },
+  {
+    "id": "cronos-the-new-dawn",
+    "name": "Cronos: The New Dawn",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Cronos: The New Dawn. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Cronos: The New Dawn. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Cronos The New Dawn.webp"
+  },
+  {
+    "id": "control",
+    "name": "Control",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Control. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Control. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Control.webp"
+  },
+  {
+    "id": "commandos-origins",
+    "name": "Commandos: Origins",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Commandos: Origins. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Commandos: Origins. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Commandos Origins.webp"
+  },
+  {
+    "id": "college-football-26",
+    "name": "College Football 26",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "sports",
+    "desc": {
+      "ar": "استمتع بتجربة رياضية حماسية ومنافسات قوية في لعبة College Football 26. فرق ورخص رسمية، فيزيائية حركة واقعية، وأطوار لعب فردية وجماعية متعددة.",
+      "en": "Experience thrilling sports competition in College Football 26. Features authentic teams, realistic motion physics, and engaging game modes."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/College Football 26.webp"
+  },
+  {
+    "id": "clair-obscur-expedition-33",
+    "name": "Clair Obscur: Expedition 33",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Clair Obscur: Expedition 33. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Clair Obscur: Expedition 33. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Clair Obscur Expedition 33.webp"
+  },
+  {
+    "id": "choo-choo-charles",
+    "name": "Choo-Choo Charles",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Choo-Choo Charles. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Choo-Choo Charles. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Choo-Choo Charles.webp"
+  },
+  {
+    "id": "chivalry-2",
+    "name": "Chivalry 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Chivalry 2. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Chivalry 2. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Chivalry 2.png"
+  },
+  {
+    "id": "chained-together",
+    "name": "Chained Together",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Chained Together. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Chained Together. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Chained Together.webp"
+  },
+  {
+    "id": "cars-3-driven-to-win",
+    "name": "Cars 3: Driven to Win",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Cars 3: Driven to Win. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Cars 3: Driven to Win. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Cars 3 Driven to Win.webp"
+  },
+  {
+    "id": "captain-tsubasa-rise-of-new-champions",
+    "name": "Captain Tsubasa: Rise of New Champions",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Captain Tsubasa: Rise of New Champions. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Captain Tsubasa: Rise of New Champions. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Captain Tsubasa Rise of New Champions.webp"
+  },
+  {
+    "id": "bus-simulator-21-next-stop",
+    "name": "Bus Simulator 21 Next Stop",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Bus Simulator 21 Next Stop. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Bus Simulator 21 Next Stop. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Bus Simulator 21 Next Stop.webp"
+  },
+  {
+    "id": "bully",
+    "name": "Bully",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Bully. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Bully. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Bully.webp"
+  },
+  {
+    "id": "brothers-a-tale-of-two-sons-remake",
+    "name": "Brothers: A Tale of Two Sons Remake",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Brothers: A Tale of Two Sons Remake. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Brothers: A Tale of Two Sons Remake. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Brothers A Tale of Two Sons Remake.webp"
+  },
+  {
+    "id": "blair-witch",
+    "name": "Blair Witch",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Blair Witch. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Blair Witch. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Blair Witch.webp"
+  },
+  {
+    "id": "black-desert",
+    "name": "Black Desert",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Black Desert. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Black Desert. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Black Desert.webp"
+  },
+  {
+    "id": "biomutant",
+    "name": "Biomutant",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Biomutant. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Biomutant. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Biomutant.webp"
+  },
+  {
+    "id": "bioshock-the-collection",
+    "name": "BioShock: The Collection",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع BioShock: The Collection. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in BioShock: The Collection. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/BioShock The Collection.webp"
+  },
+  {
+    "id": "ben-10-power-trip",
+    "name": "Ben 10: Power Trip",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Ben 10: Power Trip. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Ben 10: Power Trip. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ben 10 Power Trip.webp"
+  },
+  {
+    "id": "beast-of-reincarnation",
+    "name": "Beast of Reincarnation",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Beast of Reincarnation. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Beast of Reincarnation. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Beast of Reincarnation.webp"
+  },
+  {
+    "id": "baldur-s-gate-iii",
+    "name": "Baldur's Gate III",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Baldur's Gate III. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Baldur's Gate III. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Baldur's Gate III.webp"
+  },
+  {
+    "id": "avowed",
+    "name": "Avowed",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Avowed. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Avowed. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Avowed.webp"
+  },
+  {
+    "id": "avatar-legends-the-fighting-game",
+    "name": "Avatar Legends: The Fighting Game",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Avatar Legends: The Fighting Game. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Avatar Legends: The Fighting Game. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Avatar Legends The Fighting Game.webp"
+  },
+  {
+    "id": "assetto-corsa",
+    "name": "Assetto Corsa",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "racing",
+    "desc": {
+      "ar": "عش متعة السرعة والتحدي في Assetto Corsa. تشكيلة واسعة من السيارات والمضامير، خيارات تعديل متقدمة، وأجواء سباق تحبس الأنفاس.",
+      "en": "Feel the rush of adrenaline and speed in Assetto Corsa. Featuring top-tier vehicles, customizable options, and intense racing tracks."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Assetto Corsa.webp"
+  },
+  {
+    "id": "arma-reforger",
+    "name": "Arma Reforger",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "shooter",
+    "desc": {
+      "ar": "تحديات تصويب مثيرة ومعارك تكتيكية حماسية في Arma Reforger. ترسانة أسلحة متنوعة، خرائط استراتيجية، ومواجهات أونلاين تضع دقة تصويبك في اختبار حقيقي.",
+      "en": "Gear up for intense tactical shooting in Arma Reforger. Master an array of firearms, strategic positioning, and fast-paced combat."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Arma Reforger.webp"
+  },
+  {
+    "id": "ark-survival-ascended",
+    "name": "Ark: Survival Ascended",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Ark: Survival Ascended. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Ark: Survival Ascended. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Ark Survival Ascended.webp"
+  },
+  {
+    "id": "aragami-2",
+    "name": "Aragami 2",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Aragami 2. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Aragami 2. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Aragami 2.webp"
+  },
+  {
+    "id": "anno-1800",
+    "name": "Anno 1800",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Anno 1800. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Anno 1800. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Anno 1800.webp"
+  },
+  {
+    "id": "among-us",
+    "name": "Among Us",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع Among Us. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in Among Us. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/Among Us.webp"
+  },
+  {
+    "id": "arc-raiders",
+    "name": "ARC Raiders",
+    "consoles": [
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع ARC Raiders. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in ARC Raiders. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/ARC Raiders.webp"
+  },
+  {
+    "id": "a-way-out",
+    "name": "A Way Out",
+    "consoles": [
+      "ps4",
+      "ps5"
+    ],
+    "genre": "action",
+    "desc": {
+      "ar": "انطلق في مغامرة أكشن مشوقة مع A Way Out. قتال سريع، رسومات مبهرة، قصة مليئة بالإثارة واللحظات السينمائية التي تحبس الأنفاس.",
+      "en": "Immerse yourself in high-octane action in A Way Out. Packed with fluid combat, spectacular visual effects, and a gripping storyline."
+    },
+    "versions": [],
+    "accounts": [
+      "Primary",
+      "Secondary"
+    ],
+    "image": "/assets/image of the games/A Way Out.webp"
+  }
+];
+
+let gamesCache = null;
+const builtinDescMap = new Map(INITIAL_GAMES.map(g => [g.id, g.desc]));
+const builtinImageMap = new Map(INITIAL_GAMES.map(g => [g.id, g.image]));
+
+export function migrateGames() {
+  const currentVer = parseInt(localStorage.getItem('ggstore_data_version') || '0', 10);
+  if (currentVer < DATA_VERSION) {
+    gamesCache = null;
+    localStorage.removeItem('ggstore_games');
+    localStorage.removeItem('ggstore_games_updated_at');
+    localStorage.setItem('ggstore_data_version', String(DATA_VERSION));
+  }
+}
+
+export function getGames() {
+  if (gamesCache) return gamesCache;
+  const stored = localStorage.getItem('ggstore_games');
+  let list = INITIAL_GAMES;
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        list = parsed;
+      }
+    } catch (e) { console.error(e); }
+  }
+  gamesCache = (list || []).map(g => ({
+    ...g,
+    image: (g.image && g.image.trim()) ? g.image : (builtinImageMap.get(g.id) || ''),
+    accounts: (g.accounts || []).filter(a => a !== 'Full Account')
+  }));
+  return gamesCache;
+}
+
+export function getCloudConfig() {
+  return {
+    imgbbKey: localStorage.getItem('ggstore_imgbb_key') || (import.meta.env?.VITE_IMGBB_API_KEY || ''),
+    jsonbinId: localStorage.getItem('ggstore_jsonbin_id') || (import.meta.env?.VITE_JSONBIN_BIN_ID || ''),
+    jsonbinKey: localStorage.getItem('ggstore_jsonbin_key') || (import.meta.env?.VITE_JSONBIN_MASTER_KEY || ''),
+    customApi: localStorage.getItem('ggstore_custom_api') || (import.meta.env?.VITE_CUSTOM_API_URL || '')
+  };
+}
+
+export function saveCloudConfig(config) {
+  if (config.imgbbKey !== undefined) localStorage.setItem('ggstore_imgbb_key', config.imgbbKey.trim());
+  if (config.jsonbinId !== undefined) localStorage.setItem('ggstore_jsonbin_id', config.jsonbinId.trim());
+  if (config.jsonbinKey !== undefined) localStorage.setItem('ggstore_jsonbin_key', config.jsonbinKey.trim());
+  if (config.customApi !== undefined) localStorage.setItem('ggstore_custom_api', config.customApi.trim());
+}
+
+export async function saveGamesToCloud(games) {
+  const { jsonbinId, jsonbinKey, customApi } = getCloudConfig();
+  const payload = { updatedAt: Date.now(), games };
+  let synced = false;
+
+  if (customApi) {
+    try {
+      await fetch(customApi, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      synced = true;
+    } catch (e) {
+      console.warn('Custom API sync failed:', e);
+    }
+  }
+
+  if (jsonbinId && jsonbinKey) {
+    try {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${jsonbinId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': jsonbinKey
+        },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) synced = true;
+    } catch (e) {
+      console.warn('JSONBin sync failed:', e);
+    }
+  }
+  return synced;
+}
+
+export function saveGames(games) {
+  gamesCache = null;
+  const now = Date.now();
+  localStorage.setItem('ggstore_games', JSON.stringify(games));
+  localStorage.setItem('ggstore_admin_modified', 'true');
+  localStorage.setItem('ggstore_games_updated_at', String(now));
+  window.dispatchEvent(new CustomEvent('gamesUpdated'));
+
+  saveGamesToCloud(games).catch(() => {});
+
+  fetch('/api/games', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(games)
+  }).then(res => res.json())
+    .then(data => {
+      if (data && data.updatedAt) {
+        localStorage.setItem('ggstore_games_updated_at', String(data.updatedAt));
+      }
+    })
+    .catch(err => {
+      console.log('Local static mode or server endpoint unavailable:', err);
+    });
+}
+
+export async function syncGamesWithServer() {
+  const { jsonbinId, jsonbinKey, customApi } = getCloudConfig();
+  let serverData = null;
+
+  if (customApi) {
+    try {
+      const res = await fetch(customApi + '?t=' + Date.now(), { cache: 'no-store' });
+      if (res.ok) serverData = await res.json();
+    } catch (e) {}
+  }
+
+  if (!serverData && jsonbinId) {
+    try {
+      const headers = {};
+      if (jsonbinKey) headers['X-Master-Key'] = jsonbinKey;
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${jsonbinId}/latest?t=` + Date.now(), {
+        headers,
+        cache: 'no-store'
+      });
+      if (res.ok) {
+        const json = await res.json();
+        serverData = json.record || json;
+      }
+    } catch (e) {}
+  }
+
+  if (!serverData) {
+    try {
+      const res = await fetch('/api/games?t=' + Date.now(), { cache: 'no-store' });
+      if (res.ok) serverData = await res.json();
+    } catch (e) {}
+  }
+
+  if (!serverData) {
+    try {
+      const resStatic = await fetch('/data/games.json?t=' + Date.now(), { cache: 'no-store' });
+      if (resStatic.ok) serverData = await resStatic.json();
+    } catch (e) {}
+  }
+
+  if (serverData && Array.isArray(serverData.games) && serverData.games.length > 0) {
+    const serverTime = serverData.updatedAt || 0;
+    const localTime = parseInt(localStorage.getItem('ggstore_games_updated_at') || '0', 10);
+    const localStored = localStorage.getItem('ggstore_games');
+    const isAdminModified = localStorage.getItem('ggstore_admin_modified') === 'true';
+
+    // If local storage has admin modifications, ONLY update if server timestamp is strictly newer
+    if (isAdminModified && localStored) {
+      if (serverTime > localTime) {
+        gamesCache = null;
+        localStorage.setItem('ggstore_games', JSON.stringify(serverData.games));
+        localStorage.setItem('ggstore_data_version', String(DATA_VERSION));
+        localStorage.setItem('ggstore_games_updated_at', String(serverTime));
+        window.dispatchEvent(new CustomEvent('gamesUpdated'));
+        return true;
+      }
+      return false;
+    }
+
+    if (!localStored || serverTime > localTime) {
+      const serverStr = JSON.stringify(serverData.games);
+      if (localStored !== serverStr) {
+        gamesCache = null;
+        localStorage.setItem('ggstore_games', serverStr);
+        localStorage.setItem('ggstore_data_version', String(DATA_VERSION));
+        localStorage.setItem('ggstore_games_updated_at', String(serverTime || Date.now()));
+        window.dispatchEvent(new CustomEvent('gamesUpdated'));
+        return true;
+      }
+    }
+  }
+  return false;
+}

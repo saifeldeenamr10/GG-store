@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>GG Store — مكتبة ألعاب PlayStation</title>
+<meta name="description" content="مكتبة ألعاب PlayStation PS4 وPS5 — تصفح، اختار، واطلب عبر واتساب أو ماسنجر في دقايق.">
+<meta property="og:title" content="GG Store — مكتبة ألعاب PlayStation">
+<meta property="og:description" content="ألعاب PS4 وPS5 وباقات PlayStation Plus بأفضل الأسعار.">
+<meta name="theme-color" content="#08070d">
+<link rel="icon" type="image/webp" href="/assets/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#home" class="brand">
+      <img src="/assets/logo.png" alt="GG Store">
+      <span class="brand-name">GG <b class="grad-text">STORE</b></span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#home" data-route="home" data-i18n="navHome"></a>
+      <a href="#psplus" data-route="psplus">PlayStation Plus</a>
+      <a href="#giftcards" data-route="giftcards" data-i18n="navGiftCards">بطاقات شحن PSN</a>
+      <a href="#howto" data-route="howto" data-i18n="navHowTo"></a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-toggle" id="langToggle" title="Language" aria-label="Language / اللغة">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span data-i18n="langToggleLabel">ENGLISH</span>
+      </button>
+      <form class="search-box" id="searchForm" role="search" aria-label="بحث عن لعبة">
+        <span aria-hidden="true">🔎</span>
+        <input id="searchInput" type="search" data-i18n-ph="searchPlaceholder" aria-label="بحث عن لعبة">
+      </form>
+      <button class="icon-btn menu-toggle" id="menuToggle" data-i18n-title="menu" aria-label="القائمة" aria-expanded="false" aria-controls="mobileNav">☰</button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#home" data-i18n="navHome"></a>
+    <a href="#psplus">PlayStation Plus</a>
+    <a href="#giftcards" data-i18n="navGiftCards">بطاقات شحن PSN</a>
+    <a href="#howto" data-i18n="navHowTo"></a>
+    <form class="search-box" id="searchFormMobile">
+      <span>🔎</span>
+      <input type="search" id="searchInputMobile" data-i18n-ph="searchPlaceholder">
+    </form>
+  </div>
+</header>
+
+<main id="app" class="wrap"></main>
+
+<div class="floaters" role="complementary" aria-label="تواصل معنا">
+  <a class="f-msg" id="floatMsg" href="https://m.me/1220265181174193" target="_blank" rel="noopener noreferrer"
+     aria-label="تواصل عبر ماسنجر">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26">
+      <path d="M12 0C5.373 0 0 4.975 0 11.111c0 3.497 1.745 6.616 4.472 8.652V24l4.086-2.242c1.09.301 2.246.464 3.442.464 6.627 0 12-4.975 12-11.111S18.627 0 12 0zm1.193 14.963l-3.056-3.259-5.963 3.259L10.733 8.1l3.13 3.259L19.752 8.1l-6.559 6.863z"/>
+    </svg>
+  </a>
+</div>
+
+<div class="modal-overlay" id="orderModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+  <div class="modal-card slide-up">
+    <button class="modal-close" id="modalCloseBtn" aria-label="إغلاق">&times;</button>
+    
+    <div class="modal-header">
+      <div class="modal-header-icon">🛒</div>
+      <div>
+        <span class="eyebrow" data-i18n="orderModalEyebrow">تفاصيل الطلب جاهزة</span>
+        <h3 id="modalTitle" data-i18n="orderModalTitle">تأكيد الطلب لإرساله على ماسنجر</h3>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="order-preview-box">
+        <div class="order-msg-label">
+          <span>📋</span>
+          <span data-i18n="orderMsgLabel">الرسالة التلقائية للطلب</span>
+        </div>
+        <textarea id="orderMsgText" class="order-msg-text" readonly></textarea>
+      </div>
+
+      <div class="order-tip-box">
+        <span class="order-tip-icon">📋</span>
+        <div>
+          <strong>الرسالة اتنسخت تلقائياً! ✅</strong>
+          <span>افتح ماسنجر ← اضغط في خانة الكتابة ← اعمل Long Press ← اختار Paste (لصق) ← اضغط إرسال ➔</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-messenger btn-block" id="modalOpenMsgBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20" style="flex-shrink:0"><path d="M12 0C5.373 0 0 4.975 0 11.111c0 3.497 1.745 6.616 4.472 8.652V24l4.086-2.242c1.09.301 2.246.464 3.442.464 6.627 0 12-4.975 12-11.111S18.627 0 12 0zm1.193 14.963l-3.056-3.259-5.963 3.259L10.733 8.1l3.13 3.259L19.752 8.1l-6.559 6.863z"/></svg>
+        <span>افتح ماسنجر والصق الطلب (Paste)</span>
+      </button>
+      <button class="btn btn-outline btn-block btn-copy-only" id="modalCopyBtn">
+        📋 <span>نسخ الرسالة مرة أخرى</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Region Request Modal -->
+<div class="modal-overlay" id="customRegionModal" aria-hidden="true" role="dialog" aria-labelledby="customRegionModalTitle">
+  <div class="modal-card slide-up">
+    <button class="modal-close" id="customRegionCloseBtn" aria-label="إغلاق">&times;</button>
+    
+    <div class="modal-header">
+      <div class="modal-header-icon" style="background:linear-gradient(135deg, rgba(6,182,212,0.2), rgba(154,77,255,0.2)); color:var(--cyan);">🌍</div>
+      <div>
+        <span class="eyebrow" data-i18n="customRegionModalEyebrow">ريجون مخصص</span>
+        <h3 id="customRegionModalTitle" data-i18n="customRegionModalTitle">طلب ريجون خاص لبطاقات PSN</h3>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <p style="color:var(--text-muted); font-size:14px; margin:0 0 16px;" data-i18n="customRegionPromptDesc">
+        أدخل اسم الدولة أو الريجون المطلوب والفئة التي تحتاجها، وسيتم تجهيز الطلب فوراً:
+      </p>
+
+      <div class="field" style="margin-bottom:16px;">
+        <label for="customRegionInput" style="display:block; font-weight:700; margin-bottom:8px; font-size:13.5px;" data-i18n="customRegionInputLabel">
+          🌍 اسم الدولة أو الريجون:
+        </label>
+        <input type="text" id="customRegionInput" class="filter-search-box" style="width:100%; border-radius:var(--radius-sm); padding:12px 16px; font-size:14px; background:rgba(255,255,255,0.06); border:1px solid var(--border); color:#fff;" placeholder="مثال: المتجر الكويتي / ريجون تركي / حساب ألماني..." data-i18n-ph="customRegionInputPlaceholder" autofocus>
+      </div>
+
+      <div class="field" style="margin-bottom:16px;">
+        <label for="customRegionAmountInput" style="display:block; font-weight:700; margin-bottom:8px; font-size:13.5px;" data-i18n="customRegionAmountLabel">
+          💰 الفئة المطلوبة (اختياري):
+        </label>
+        <input type="text" id="customRegionAmountInput" class="filter-search-box" style="width:100%; border-radius:var(--radius-sm); padding:12px 16px; font-size:14px; background:rgba(255,255,255,0.06); border:1px solid var(--border); color:#fff;" placeholder="مثال: 20$ / 50$ / أو أي فئة أخرى..." data-i18n-ph="customRegionAmountPlaceholder">
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-grad btn-block" id="customRegionSubmitBtn" data-i18n="customRegionContinueBtn">
+        تجهيز الطلب والانتقال لماسنجر ➔
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <img src="/assets/logo.png" alt="GG Store">
+          <span class="brand-name">GG <b class="grad-text">STORE</b></span>
+        </div>
+        <p style="color:var(--text-muted); font-size:13.5px; max-width:320px; margin:0;" data-i18n="footerDesc"></p>
+      </div>
+      <div>
+        <h5 data-i18n="footerBrowse"></h5>
+        <ul>
+          <li><a href="#home" data-i18n="navHome">الرئيسية</a></li>
+          <li><a href="#psplus">PlayStation Plus</a></li>
+          <li><a href="#giftcards" data-i18n="navGiftCards">بطاقات شحن PSN</a></li>
+          <li><a href="#howto" data-i18n="navHowTo">كيف تشتري</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-i18n="footerContact"></h5>
+        <ul>
+          <li><a href="https://m.me/1220265181174193" id="footerMsg" aria-label="تواصل عبر ماسنجر" data-i18n="messenger"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span data-i18n="footerRights"></span>
+    <span>Powered by Vite & Vanilla JS</span>
+  </div>
+</footer>
+
+<script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

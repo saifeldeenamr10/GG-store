@@ -1,0 +1,390 @@
+/* ---------- Header ---------- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8, 7, 13, .82);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 20px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.brand img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+.brand-name {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: .02em;
+}
+
+.brand-name b {
+  font-weight: 900;
+}
+
+nav.main-nav {
+  display: flex;
+  gap: 4px;
+  margin-inline-start: 8px;
+  flex: 1;
+}
+
+nav.main-nav a {
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: .2s;
+  white-space: nowrap;
+}
+
+nav.main-nav a:hover {
+  color: var(--text);
+  background: var(--card);
+}
+
+nav.main-nav a.active {
+  color: #fff;
+  background: var(--gradient-soft);
+  border: 1px solid var(--border-glow);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+/* ---------- Sections ---------- */
+section.block {
+  padding: 46px 0;
+}
+
+.block-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.block-head h2 {
+  font-size: 26px;
+  margin: 6px 0 0;
+  font-weight: 800;
+}
+
+.see-all {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--blue-light);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---------- Floating contact ---------- */
+.floaters {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 200;
+}
+
+.floaters a {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+  transition: .2s;
+}
+
+.floaters a:hover {
+  transform: scale(1.08);
+}
+
+.f-wa {
+  background: var(--whatsapp);
+  color: #06210f;
+}
+
+.f-msg {
+  background: linear-gradient(135deg, var(--messenger-a), var(--messenger-b));
+  color: #fff;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+  padding: 40px 0 26px;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 30px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.footer-brand img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+footer h5 {
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 9px;
+}
+
+footer a {
+  color: var(--text-muted);
+  font-size: 13.5px;
+}
+
+footer a:hover {
+  color: var(--text);
+}
+
+.footer-bottom {
+  max-width: var(--maxw);
+  margin: 30px auto 0;
+  padding: 18px 20px 0;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--text-faint);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Responsive Design System — Desktop, Tablet, Mobile L, Mobile, Mobile XS
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Tier grid: 3 equal columns on desktop ── */
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ── Hero emblem ── */
+.hero-emblem-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-emblem-wrap img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  border-radius: var(--radius);
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(154,77,255,.4));
+}
+
+/* ── ≤ 1024px: Tablet Landscape & Laptops ── */
+@media (max-width: 1024px) {
+  .game-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .upcoming-subgrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── ≤ 920px: Tablet Portrait ── */
+@media (max-width: 920px) {
+  nav.main-nav,
+  .search-box { display: none; }
+  .menu-toggle { display: grid; }
+
+  .header-inner {
+    padding: 10px 16px;
+    justify-content: space-between;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 44px 0 36px;
+    gap: 28px;
+  }
+  .hero-cta { justify-content: center; }
+  .hero-emblem-wrap { order: -1; }
+  .hero-emblem-wrap img, .hero-emblem-wrap svg { max-width: 240px; }
+  p.lead { margin-inline: auto; }
+  .hero h1 { font-size: 32px; }
+
+  .console-cards { grid-template-columns: 1fr; gap: 16px; }
+  .trust-bar { grid-template-columns: 1fr 1fr; }
+  .tier-grid { grid-template-columns: 1fr; gap: 16px; }
+  .game-detail { grid-template-columns: 1fr; gap: 24px; }
+  .selectors { grid-template-columns: 1fr 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .admin-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .upcoming-featured { grid-template-columns: 1fr; gap: 20px; }
+  .upcoming-subgrid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── ≤ 768px: Mobile Large ── */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 26px; }
+  .hero-inner { padding: 36px 0 28px; }
+  .block-head h2 { font-size: 22px; }
+  .upcoming-header h2 { font-size: 22px; }
+  .selectors { grid-template-columns: 1fr; }
+  
+  /* Horizontal scrollable category chips bar on mobile */
+  .chip-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .chip { flex-shrink: 0; white-space: nowrap; }
+}
+
+/* ── ≤ 560px: Mobile Standard ── */
+@media (max-width: 560px) {
+  .game-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
+  .hero h1 { font-size: 22px; }
+  .hero-inner { padding: 28px 0 22px; }
+  .hero-emblem-wrap img, .hero-emblem-wrap svg { max-width: 180px; }
+  .hero-cta { flex-direction: column; width: 100%; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+
+  .trust-bar { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .form-row-2 { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; }
+  .buy-row { flex-direction: column; }
+  
+  .floaters { bottom: 14px; right: 14px; gap: 10px; }
+  .floaters a { width: 46px; height: 46px; font-size: 20px; }
+
+  .psplus-banner { padding: 22px 18px; }
+  .game-detail { padding: 20px 0 36px; }
+
+  .upcoming-section { padding: 18px 14px; border-radius: var(--radius-sm); margin-bottom: 28px; }
+  .upcoming-featured { padding: 16px; gap: 16px; }
+  .upcoming-cover-wrap { aspect-ratio: 16/9; }
+  .upcoming-subgrid { grid-template-columns: 1fr; }
+  
+  /* 4 countdown units always fit in 1 row */
+  .countdown-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+  .countdown-unit {
+    padding: 8px 4px;
+    min-width: 0;
+    width: 100%;
+  }
+  .countdown-unit .val { font-size: 18px; }
+  .countdown-unit .lbl { font-size: 9.5px; }
+
+  .upcoming-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .upcoming-actions .btn,
+  .upcoming-actions .hype-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── ≤ 380px: Mobile XS (iPhone SE, narrow screens) ── */
+@media (max-width: 380px) {
+  .game-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
+  .hero h1 { font-size: 19px; }
+  .trust-bar { grid-template-columns: 1fr; }
+  .header-inner { padding: 8px 12px; }
+  .brand-name { font-size: 16px; }
+  .brand img { width: 34px; height: 34px; }
+}
+
+/* ── Mobile Nav ── */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 16px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+.mobile-nav.open { display: flex; }
+
+.mobile-nav a {
+  padding: 12px 8px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+}
+
+.mobile-nav .search-box {
+  display: flex;
+  width: 100%;
+  margin-top: 8px;
+}
