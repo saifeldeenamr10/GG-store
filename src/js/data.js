@@ -6959,10 +6959,20 @@ export function saveCloudConfig(config) {
 }
 
 export async function saveGamesToCloud(games) {
+  // Firebase is now the primary cloud — also keep legacy JSONBin/customApi as fallback
   const { jsonbinId, jsonbinKey, customApi } = getCloudConfig();
   const payload = { updatedAt: Date.now(), games };
   let synced = false;
 
+  // ── Firebase (primary) ─────────────────────────────────────────────────────
+  try {
+    const { saveGamesToFirebase } = await import('./firebase.js');
+    synced = await saveGamesToFirebase(games);
+  } catch (e) {
+    console.warn('[Firebase] saveGamesToCloud failed:', e);
+  }
+
+  // ── Legacy fallbacks ───────────────────────────────────────────────────────
   if (customApi) {
     try {
       await fetch(customApi, {
@@ -6970,7 +6980,6 @@ export async function saveGamesToCloud(games) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      synced = true;
     } catch (e) {
       console.warn('Custom API sync failed:', e);
     }
@@ -6978,7 +6987,7 @@ export async function saveGamesToCloud(games) {
 
   if (jsonbinId && jsonbinKey) {
     try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${jsonbinId}`, {
+      await fetch(`https://api.jsonbin.io/v3/b/${jsonbinId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -6986,11 +6995,11 @@ export async function saveGamesToCloud(games) {
         },
         body: JSON.stringify(payload)
       });
-      if (res.ok) synced = true;
     } catch (e) {
       console.warn('JSONBin sync failed:', e);
     }
   }
+
   return synced;
 }
 
@@ -7002,24 +7011,39 @@ export function saveGames(games) {
   localStorage.setItem('ggstore_games_updated_at', String(now));
   window.dispatchEvent(new CustomEvent('gamesUpdated'));
 
+  // Push to Firebase (and legacy fallbacks) — this is what syncs all users
   saveGamesToCloud(games).catch(() => {});
-
-  fetch('/api/games', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(games)
-  }).then(res => res.json())
-    .then(data => {
-      if (data && data.updatedAt) {
-        localStorage.setItem('ggstore_games_updated_at', String(data.updatedAt));
-      }
-    })
-    .catch(err => {
-      console.log('Local static mode or server endpoint unavailable:', err);
-    });
 }
 
 export async function syncGamesWithServer() {
+  // ── Firebase (primary, fastest) ────────────────────────────────────────────
+  try {
+    const { fetchGamesFromFirebase } = await import('./firebase.js');
+    const firebaseData = await fetchGamesFromFirebase();
+    if (firebaseData && Array.isArray(firebaseData.games) && firebaseData.games.length > 0) {
+      const serverTime = firebaseData.updatedAt || 0;
+      const localTime = parseInt(localStorage.getItem('ggstore_games_updated_at') || '0', 10);
+      const localStored = localStorage.getItem('ggstore_games');
+
+      if (!localStored || serverTime > localTime) {
+        const serverStr = JSON.stringify(firebaseData.games);
+        if (localStored !== serverStr) {
+          gamesCache = null;
+          localStorage.setItem('ggstore_games', serverStr);
+          localStorage.setItem('ggstore_data_version', String(DATA_VERSION));
+          localStorage.setItem('ggstore_games_updated_at', String(serverTime));
+          localStorage.removeItem('ggstore_admin_modified');
+          window.dispatchEvent(new CustomEvent('gamesUpdated'));
+          return true;
+        }
+      }
+      return false;
+    }
+  } catch (e) {
+    console.warn('[Firebase] sync failed, falling back to legacy:', e);
+  }
+
+  // ── Legacy fallback (JSONBin / customApi / static JSON) ───────────────────
   const { jsonbinId, jsonbinKey, customApi } = getCloudConfig();
   let serverData = null;
 
@@ -7035,20 +7059,12 @@ export async function syncGamesWithServer() {
       const headers = {};
       if (jsonbinKey) headers['X-Master-Key'] = jsonbinKey;
       const res = await fetch(`https://api.jsonbin.io/v3/b/${jsonbinId}/latest?t=` + Date.now(), {
-        headers,
-        cache: 'no-store'
+        headers, cache: 'no-store'
       });
       if (res.ok) {
         const json = await res.json();
         serverData = json.record || json;
       }
-    } catch (e) {}
-  }
-
-  if (!serverData) {
-    try {
-      const res = await fetch('/api/games?t=' + Date.now(), { cache: 'no-store' });
-      if (res.ok) serverData = await res.json();
     } catch (e) {}
   }
 
@@ -7063,20 +7079,6 @@ export async function syncGamesWithServer() {
     const serverTime = serverData.updatedAt || 0;
     const localTime = parseInt(localStorage.getItem('ggstore_games_updated_at') || '0', 10);
     const localStored = localStorage.getItem('ggstore_games');
-    const isAdminModified = localStorage.getItem('ggstore_admin_modified') === 'true';
-
-    // If local storage has admin modifications, ONLY update if server timestamp is strictly newer
-    if (isAdminModified && localStored) {
-      if (serverTime > localTime) {
-        gamesCache = null;
-        localStorage.setItem('ggstore_games', JSON.stringify(serverData.games));
-        localStorage.setItem('ggstore_data_version', String(DATA_VERSION));
-        localStorage.setItem('ggstore_games_updated_at', String(serverTime));
-        window.dispatchEvent(new CustomEvent('gamesUpdated'));
-        return true;
-      }
-      return false;
-    }
 
     if (!localStored || serverTime > localTime) {
       const serverStr = JSON.stringify(serverData.games);

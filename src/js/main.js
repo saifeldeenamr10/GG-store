@@ -2,6 +2,7 @@ import '../styles/main.css';
 import { route } from './router.js';
 import { CONFIG, migrateGames, syncGamesWithServer, UPCOMING_GAMES, toggleHype } from './data.js';
 import { t, currentLang, setLanguage, initI18n } from './i18n.js';
+import { subscribeToGames } from './firebase.js';
 
 export function mLink(text) { 
   if (text) {
@@ -382,10 +383,16 @@ window.addEventListener('DOMContentLoaded', () => {
   route();
   startCountdownTicker();
 
-  // Auto poll every 1.5 seconds for instant live updates across all devices
-  setInterval(() => {
-    syncGamesWithServer().catch(() => {});
-  }, 1500);
+  // Real-time Firebase listener — updates ALL users the instant admin saves
+  subscribeToGames((games, updatedAt) => {
+    const localTime = parseInt(localStorage.getItem('ggstore_games_updated_at') || '0', 10);
+    if (updatedAt > localTime) {
+      localStorage.setItem('ggstore_games', JSON.stringify(games));
+      localStorage.setItem('ggstore_games_updated_at', String(updatedAt));
+      localStorage.removeItem('ggstore_admin_modified');
+      window.dispatchEvent(new CustomEvent('gamesUpdated'));
+    }
+  });
 });
 
 window.addEventListener('focus', syncGamesWithServer);
