@@ -6,13 +6,21 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+// Load .env manually (no dotenv dependency needed)
+const envFile = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '.env'), 'utf8');
+const env = Object.fromEntries(
+  envFile.split('\n')
+    .filter(l => l.includes('='))
+    .map(l => { const [k, ...v] = l.split('='); return [k.trim(), v.join('=').trim()]; })
+);
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDmauSuYg3mGMqS4YJEfo-JWqw2K4UFRzI",
-  authDomain: "gg-store-deb9f.firebaseapp.com",
-  projectId: "gg-store-deb9f",
-  storageBucket: "gg-store-deb9f.firebasestorage.app",
-  messagingSenderId: "840758879736",
-  appId: "1:840758879736:web:08b3d64334f8e38ce8e20d"
+  apiKey:            env.VITE_FIREBASE_API_KEY,
+  authDomain:        env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId:         env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket:     env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId:             env.VITE_FIREBASE_APP_ID,
 };
 
 // ─── Extract INITIAL_GAMES from data.js ──────────────────────────────────────
